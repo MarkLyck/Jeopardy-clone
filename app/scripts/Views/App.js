@@ -7,7 +7,7 @@ const App = React.createClass({
   },
   render: function() {
     return (
-      <div>
+      <header>
         <nav>
           <ul>
             <li><Link to="/login">Login</Link></li>
@@ -16,7 +16,7 @@ const App = React.createClass({
           </ul>
         </nav>
         {this.props.children}
-      </div>
+      </header>
     )
   }
 })

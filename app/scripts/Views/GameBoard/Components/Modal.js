@@ -1,11 +1,23 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
+import $ from 'jquery'
 
 const Modal = React.createClass({
+  unmount: function() {
+    // var node = this.getDOMNode();
+    var node = ReactDOM.findDOMNode(this)
+    ReactDOM.unmountComponentAtNode(node);
+    $(node).remove();
+  },
   checkAnswer: function() {
     if (this.refs.questionInput.value === this.props.answer) {
       console.log('YOU ARE CORRECT!');
+      // this.unmount()
+      this.props.test(true)
     } else {
       console.log('YOU ARE WRONG!');
+      // this.unmount()
+      this.props.test(false)
     }
   },
   render: function() {

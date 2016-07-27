@@ -31,6 +31,10 @@ const GameBoard = React.createClass({
       category: category
     })
   },
+  removeModal: function(isCorrect) {
+    this.setState({answering: false})
+    console.log(isCorrect);
+  },
   render: function() {
     if (this.state.categories[0]) {
       let gameContent = this.state.categories.map((category, i) => {
@@ -52,12 +56,11 @@ const GameBoard = React.createClass({
         )
       })
 
-      console.log(this.state.answering);
       let questionModal;
       if (this.state.answering) {
         console.log('SHOW QUESTION MODAL');
         questionModal = (
-          <Modal category={this.state.category} question={this.state.question} answer={this.state.answer}/>
+          <Modal test={this.removeModal} category={this.state.category} question={this.state.question} answer={this.state.answer}/>
         )
       }
 
@@ -70,11 +73,6 @@ const GameBoard = React.createClass({
     } else {
       return null
     }
-    // console.log(game.);
-
-
-
-
   }
 })
 

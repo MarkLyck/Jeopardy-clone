@@ -1,0 +1,11 @@
+header {
+  nav {
+    ul {
+      display: flex;
+      li {
+        margin-left: 20px;
+        color: $secondary-color;
+      }
+    }
+  }
+}
