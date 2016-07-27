@@ -396,33 +396,38 @@ textarea {
 
 #game-container {
   display: flex;
-  justify-content: center; }
-  #game-container .category-container {
+  flex-direction: column;
+  align-items: center; }
+  #game-container div {
+    width: 100%;
+    display: flex; }
+
+.category-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+  width: calc(100%/6); }
+  .category-container .category-name {
     display: flex;
-    flex-direction: column;
-    margin: 0 20px;
-    width: calc(100%/6); }
-    #game-container .category-container .category-name {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #88ABF3;
-      background-color: #0614AD;
-      height: 100px; }
-    #game-container .category-container .clues-list li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100px;
-      width: 100%;
-      margin: 5px 0;
-      background-color: #0614AD;
-      color: #E8AA7C;
-      font-size: 2rem;
-      box-sizing: border-box; }
-      #game-container .category-container .clues-list li:hover {
-        cursor: pointer;
-        background-color: #051194; }
+    justify-content: center;
+    align-items: center;
+    color: #88ABF3;
+    background-color: #0614AD;
+    height: 100px; }
+  .category-container .clues-list li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    margin: 5px 0;
+    background-color: #0614AD;
+    color: #E8AA7C;
+    font-size: 2rem;
+    box-sizing: border-box; }
+    .category-container .clues-list li:hover {
+      cursor: pointer;
+      background-color: #051194; }
 
 header nav ul {
   display: flex; }
@@ -444,7 +449,13 @@ header nav ul {
     background: #fff;
     padding: 40px;
     border-radius: 5px;
-    width: 60%; }
+    width: 60%;
+    display: flex;
+    flex-direction: column; }
+
+#user-section {
+  background: blue;
+  color: #fff; }
 
 body {
   background-color: #000; }
