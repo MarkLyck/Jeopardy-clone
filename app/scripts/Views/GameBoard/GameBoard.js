@@ -9,6 +9,7 @@ import GameModel from '../../models/Game'
 
 import Category from './components/Category'
 import Modal from './components/Modal'
+import UserSection from './components/UserSection'
 
 const GameBoard = React.createClass({
   getInitialState: function() {
@@ -21,17 +22,28 @@ const GameBoard = React.createClass({
     })
     game.getGame()
   },
-  startQuestion: function(quesion, answer, category) {
-    console.log(quesion);
-    console.log(answer);
+  startQuestion: function(quesion, answer, clueValue) {
+    console.log('STARTING QUESTION!');
     this.setState({
       answering: true,
       question: quesion,
       answer: answer,
-      category: category
+      clueValue: clueValue
     })
   },
-  removeModal: function(isCorrect) {
+  removeModal: function() {
+    this.setState({answering: false})
+  },
+  sendAnswer: function(isCorrect) {
+    if (isCorrect) {
+      console.log('CORRECT ANSWER');
+      let newMoney = store.session.get('money')
+      newMoney += this.state.clueValue
+      store.session.set('money', newMoney)
+      console.log('store money afteR: ', store.session.get('money'));
+    } else {
+      console.log('WRONG ANSWER');
+    }
     this.setState({answering: false})
     console.log(isCorrect);
   },
@@ -39,20 +51,12 @@ const GameBoard = React.createClass({
     if (this.state.categories[0]) {
       let gameContent = this.state.categories.map((category, i) => {
         let clues = this.state.categories[i].clues
-
         clues = _.sortBy(clues, function(clue) {
           return clue.value
         })
 
-
         return (
-          <Category categoryName={this.state.categories[i].title} key={i}>
-            <li onClick={this.startQuestion.bind(null, clues[0].question, clues[0].answer, category.title)} value={clues[0].value}> ${clues[0].value} </li>
-            <li onClick={this.startQuestion.bind(null, clues[1].question, clues[1].answer, category.title)} value={clues[1].value}> ${clues[1].value} </li>
-            <li onClick={this.startQuestion.bind(null, clues[2].question, clues[2].answer, category.title)} value={clues[2].value}> ${clues[2].value} </li>
-            <li onClick={this.startQuestion.bind(null, clues[3].question, clues[3].answer, category.title)} value={clues[3].value}> ${clues[3].value} </li>
-            <li onClick={this.startQuestion.bind(null, clues[4].question, clues[4].answer, category.title)} value={clues[4].value}> ${clues[4].value} </li>
-          </Category>
+          <Category clickHandler={this.startQuestion} categoryName={this.state.categories[i].title} key={i} clues={clues}/>
         )
       })
 
@@ -60,14 +64,15 @@ const GameBoard = React.createClass({
       if (this.state.answering) {
         console.log('SHOW QUESTION MODAL');
         questionModal = (
-          <Modal test={this.removeModal} category={this.state.category} question={this.state.question} answer={this.state.answer}/>
+          <Modal removeModal={this.removeModal} sendAnswer={this.sendAnswer} clueValue={this.state.clueValue} question={this.state.question} answer={this.state.answer}/>
         )
       }
 
       return (
         <div id="game-container">
-          {gameContent}
+          <div>{gameContent}</div>
           {questionModal}
+          <UserSection/>
         </div>
       )
     } else {

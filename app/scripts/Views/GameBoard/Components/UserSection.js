@@ -1,0 +1,26 @@
+import React from 'react'
+
+import store from '../../../store'
+
+const UserSection = React.createClass({
+  getInitialState: function() {
+    return {clicked: false}
+  },
+  componentDidMount: function() {
+    store.session.on('change', () => {
+      console.log('SESSION CHANGED');
+      this.forceUpdate()
+    })
+  },
+  render: function() {
+    return (
+      <div id="user-section">
+        <div>{store.session.get('username')}</div>
+        <div>${store.session.get('money')}</div>
+      </div>
+    )
+
+  }
+})
+
+export default UserSection
