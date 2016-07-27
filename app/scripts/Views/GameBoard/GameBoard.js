@@ -8,10 +8,11 @@ import store from '../../store'
 import GameModel from '../../models/Game'
 
 import Category from './components/Category'
+import Modal from './components/Modal'
 
 const GameBoard = React.createClass({
   getInitialState: function() {
-    return {categories: []}
+    return {categories: [], answering: false, question: '', answer: ''}
   },
   componentDidMount: function() {
     let game = new GameModel()
@@ -19,68 +20,18 @@ const GameBoard = React.createClass({
       this.setState({categories: game.get('categories')})
     })
     game.getGame()
-    //
-    // $.ajax(`http://jservice.io/api/categories?count=6&offset=${store.session.get('categoriesSeen')}`)
-    //   .then((categories) => {
-    //     let currCategoriesSeen = store.session.get('categoriesSeen')
-    //     store.session.set('categoriesSeen', currCategoriesSeen+6)
-    //     let fixedCategories = categories
-    //
-    //     let fetchedCategories = []
-    //
-    //     let gotClue = (category, clue) => {
-    //       category.clues.push(clue)
-    //
-    //       if (category.clues.length === 5) {
-    //         fetchedCategories.push(category)
-    //       }
-    //       if (fetchedCategories.length === 6) {
-    //         this.setState({categories: fetchedCategories})
-    //         console.log(this.state);
-    //       }
-    //     }
-    //
-    //     categories.forEach((category, i) => {
-    //       category.clues = [];
-    //       let finishedCount = 0
-    //       $.ajax(`http://jservice.io/api/clues?category=${category.id}&value=200`).then((clue) => {
-    //         // console.log(clue[0]);
-    //         gotClue(category, clue[0])
-    //       })
-    //       $.ajax(`http://jservice.io/api/clues?category=${category.id}&value=400`).then((clue) => {
-    //         // console.log(clue[0]);
-    //         gotClue(category, clue[0])
-    //       })
-    //       $.ajax(`http://jservice.io/api/clues?category=${category.id}&value=600`).then((clue) => {
-    //         // console.log(clue[0]);
-    //         gotClue(category, clue[0])
-    //       })
-    //       $.ajax(`http://jservice.io/api/clues?category=${category.id}&value=800`).then((clue) => {
-    //         // console.log(clue[0]);
-    //         gotClue(category, clue[0])
-    //       })
-    //       $.ajax(`http://jservice.io/api/clues?category=${category.id}&value=1000`).then((clue) => {
-    //         // console.log(clue[0]);
-    //         gotClue(category, clue[0])
-    //       })
-    //     })
-    //   })
   },
   startQuestion: function(quesion, answer) {
-    console.log('STARTING QUESTION');
     console.log(quesion);
     console.log(answer);
-    // this.setState({
-    //   answering: {
-    //     question: quesion,
-    //     answer: answer
-    //   }
-    // })
+    this.setState({
+      answering: true,
+      question: quesion,
+      answer: answer
+    })
   },
   render: function() {
     if (this.state.categories[0]) {
-      console.log('STATE: ', this.state.categories);
-
       let gameContent = this.state.categories.map((category, i) => {
         let clues = this.state.categories[i].clues
 
@@ -99,9 +50,19 @@ const GameBoard = React.createClass({
         )
       })
 
+      console.log(this.state.answering);
+      let questionModal;
+      if (this.state.answering) {
+        console.log('SHOW QUESTION MODAL');
+        questionModal = (
+          <Modal question={this.state.question} answer={this.state.answer}/>
+        )
+      }
+
       return (
         <div id="game-container">
           {gameContent}
+          {questionModal}
         </div>
       )
     } else {
