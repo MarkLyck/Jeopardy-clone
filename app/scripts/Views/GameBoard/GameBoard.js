@@ -21,13 +21,14 @@ const GameBoard = React.createClass({
     })
     game.getGame()
   },
-  startQuestion: function(quesion, answer) {
+  startQuestion: function(quesion, answer, category) {
     console.log(quesion);
     console.log(answer);
     this.setState({
       answering: true,
       question: quesion,
-      answer: answer
+      answer: answer,
+      category: category
     })
   },
   render: function() {
@@ -39,13 +40,14 @@ const GameBoard = React.createClass({
           return clue.value
         })
 
+
         return (
           <Category categoryName={this.state.categories[i].title} key={i}>
-            <li onClick={this.startQuestion.bind(null, clues[0].question, clues[0].answer)} value={clues[0].value}> ${clues[0].value} </li>
-            <li onClick={this.startQuestion.bind(null, clues[1].question, clues[1].answer)} value={clues[1].value}> ${clues[1].value} </li>
-            <li onClick={this.startQuestion.bind(null, clues[2].question, clues[2].answer)} value={clues[2].value}> ${clues[2].value} </li>
-            <li onClick={this.startQuestion.bind(null, clues[3].question, clues[3].answer)} value={clues[3].value}> ${clues[3].value} </li>
-            <li onClick={this.startQuestion.bind(null, clues[4].question, clues[4].answer)} value={clues[4].value}> ${clues[4].value} </li>
+            <li onClick={this.startQuestion.bind(null, clues[0].question, clues[0].answer, category.title)} value={clues[0].value}> ${clues[0].value} </li>
+            <li onClick={this.startQuestion.bind(null, clues[1].question, clues[1].answer, category.title)} value={clues[1].value}> ${clues[1].value} </li>
+            <li onClick={this.startQuestion.bind(null, clues[2].question, clues[2].answer, category.title)} value={clues[2].value}> ${clues[2].value} </li>
+            <li onClick={this.startQuestion.bind(null, clues[3].question, clues[3].answer, category.title)} value={clues[3].value}> ${clues[3].value} </li>
+            <li onClick={this.startQuestion.bind(null, clues[4].question, clues[4].answer, category.title)} value={clues[4].value}> ${clues[4].value} </li>
           </Category>
         )
       })
@@ -55,7 +57,7 @@ const GameBoard = React.createClass({
       if (this.state.answering) {
         console.log('SHOW QUESTION MODAL');
         questionModal = (
-          <Modal question={this.state.question} answer={this.state.answer}/>
+          <Modal category={this.state.category} question={this.state.question} answer={this.state.answer}/>
         )
       }
 

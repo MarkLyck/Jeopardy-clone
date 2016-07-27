@@ -12,6 +12,7 @@ const Modal = React.createClass({
     return (
       <div className="modal-container">
         <div className="modal">
+          <h4>{this.props.category}</h4>
           <h3>{this.props.question}</h3>
           <p>{this.props.answer}</p>
           <input id="questionInput" type="text" ref="questionInput"/>
