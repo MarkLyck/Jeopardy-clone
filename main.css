@@ -434,6 +434,9 @@ textarea {
       cursor: pointer;
       background-color: #fff;
       color: #555; }
+  .category-container .clues-list .answered:hover {
+    cursor: auto;
+    background: none; }
 
 header nav {
   display: flex;
