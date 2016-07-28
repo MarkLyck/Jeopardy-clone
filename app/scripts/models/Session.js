@@ -36,7 +36,8 @@ const Session = Backbone.Model.extend({
   signup: function(username, password) {
     store.session.save({
       username: username,
-      password: password
+      password: password,
+      highscore: this.get('highScore')
     },
     {
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/`,
