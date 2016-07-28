@@ -32,6 +32,7 @@ const Game = Backbone.Model.extend({
           newClue.set('question', clue.question)
           newClue.set('answer', clue.answer)
           newClue.set('value', clue.value)
+          newClue.set('category', category.title)
           return newClue
         })
 

@@ -16,14 +16,16 @@ const QuestionModal = React.createClass({
     answer = answer.replace('who is', '')
     answer = answer.trim()
 
-    if (answer === this.props.answer.toLowerCase()) {
+    if (answer === this.props.clue.get('answer').toLowerCase()) {
       console.log('YOU ARE CORRECT!');
       this.props.sendAnswer(true)
       clearInterval(this.state.interval);
+      this.props.clue.set('answered', 'correct')
     } else {
       console.log('YOU ARE WRONG!');
       this.props.sendAnswer(false)
       clearInterval(this.state.interval);
+      this.props.clue.set('answered', 'wrong')
     }
   },
   removeModal: function(e) {
@@ -33,6 +35,7 @@ const QuestionModal = React.createClass({
       this.thinkingMusic.currentTime = 0;
       this.props.sendAnswer(false)
       clearInterval(this.state.interval);
+      this.props.clue.set('answered', 'passed')
     }
   },
   componentDidMount: function() {
@@ -108,15 +111,15 @@ const QuestionModal = React.createClass({
       )
     }
 
-    console.log('ANSWER: ', this.props.answer);
+    console.log('ANSWER: ', this.props.clue.get('answer'));
     return (
       <div onClick={this.removeModal} className="modal-container">
         <div className="modal">
           <h2 id="time-left">{this.state.timeLeft}</h2>
 
-          <h4 className="modal-category">{this.props.category} for ${this.props.clueValue}</h4>
+          <h4 className="modal-category">{this.props.clue.get('category')} for ${this.props.clue.get('value')}</h4>
 
-          <h3 className="modal-question">{this.props.question}</h3>
+          <h3 className="modal-question">{this.props.clue.get('question')}</h3>
 
           {microphone}
 

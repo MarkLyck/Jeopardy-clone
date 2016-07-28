@@ -22,14 +22,25 @@ const GameBoard = React.createClass({
     })
     store.game.model.getGame()
   },
-  startQuestion: function(quesion, answer, clueValue, categoryName) {
+  startQuestion: function(clue) {
     console.log('STARTING QUESTION!');
+
+    let correctAnswer = clue.get('answer')
+    correctAnswer = correctAnswer.replace('(', '')
+    correctAnswer = correctAnswer.replace(')', '')
+    correctAnswer = correctAnswer.replace('.', '')
+    correctAnswer = correctAnswer.replace(',', '')
+    correctAnswer = correctAnswer.replace('<i>', '')
+    correctAnswer = correctAnswer.replace('</i>', '')
+    correctAnswer = correctAnswer.replace(/\\/g, '');
+
     this.setState({
+      clue: clue,
       answering: true,
-      question: quesion,
-      answer: answer,
-      clueValue: clueValue,
-      category: categoryName
+      question: clue.get('question'),
+      answer: correctAnswer,
+      clueValue: clue.get('value'),
+      category: clue.get('category')
     })
   },
   removeModal: function() {
@@ -51,11 +62,9 @@ const GameBoard = React.createClass({
     if (this.state.categories[0]) {
       let gameContent = this.state.categories.map((category, i) => {
         let clues = this.state.categories[i].clues
-        console.log('clues: ',clues);
         clues = _.sortBy(clues, function(clue) {
           return clue.get('value')
         })
-
         return (
           <Category startQuestion={this.startQuestion} categoryName={this.state.categories[i].title} key={i} clues={clues}/>
         )
@@ -65,7 +74,7 @@ const GameBoard = React.createClass({
       if (this.state.answering === true) {
         console.log('SHOW QUESTION MODAL');
         questionModal = (
-          <QuestionModal removeModal={this.removeModal} sendAnswer={this.sendAnswer} clueValue={this.state.clueValue} category={this.state.category} question={this.state.question} answer={this.state.answer}/>
+          <QuestionModal removeModal={this.removeModal} sendAnswer={this.sendAnswer} clue={this.state.clue}/>
         )
       } else if (this.state.answering === 'correct') {
         questionModal = (
