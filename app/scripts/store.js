@@ -2,6 +2,7 @@ import Session from './models/Session'
 import Game from './models/Game'
 import MultiplayerGame from './models/MultiplayerGame'
 import Users from './collections/Users'
+import Clues from './collections/Clues'
 
 let store = {
   session: new Session(),
@@ -13,6 +14,7 @@ let store = {
     fetching: false,
     model: new MultiplayerGame()
   },
+  clues: new Clues(),
   users: new Users(),
   settings: {
     appKey: 'kid_BJXvpPIu',

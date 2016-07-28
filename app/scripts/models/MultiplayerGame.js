@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import _ from 'underscore'
 import Backbone from 'backbone';
 
 import store from '../store'
@@ -11,7 +12,8 @@ const Game = Backbone.Model.extend({
     gameNumber: 0,
     players: [],
     playerCount: 1,
-    turn: ''
+    turn: '',
+    clueIds: []
   },
   getGame: function() {
     $.ajax('https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards?query={"playerCount":{"$lt": 3}}').then((response) => {
@@ -27,16 +29,27 @@ const Game = Backbone.Model.extend({
         console.log('FOUND GAME ON SERVER');
 
         let fixedCategories = response[0].categories.map(function(category) {
-          let cluesModelArr = category.clues.map(function(clue) {
-            let newClue = new ClueModel({
+
+          let sortedClues = _.sortBy(category.clues, function(clue) {
+            return clue.value
+          })
+
+          let clueIds = []
+
+          store.clues.reset()
+          sortedClues.forEach(function(clue) {
+            store.clues.add({
+              id: clue.id,
               question: clue.question,
               answer: clue.answer,
               value: clue.value,
-              answered: clue.answered
+              answered: clue.answered,
+              category: clue.category
             })
-            return newClue
+            clueIds.push(clue.id)
           })
-          category.clues = cluesModelArr
+
+          category.clueIds = clueIds
           return category
         })
 
@@ -50,6 +63,7 @@ const Game = Backbone.Model.extend({
         players.push(store.session.get('username'))
         this.set('players', players)
         this.save()
+        // Saving it to the server will Cause it to break...
       }
     })
   },
@@ -66,6 +80,7 @@ const Game = Backbone.Model.extend({
         })
         usefulClues = usefulClues.map((clue) => {
           let newClue = new ClueModel()
+          newClue.set('id', clue.id)
           newClue.set('question', clue.question)
           newClue.set('answer', clue.answer)
           newClue.set('value', clue.value)

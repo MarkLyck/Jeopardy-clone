@@ -25,9 +25,7 @@ const GameBoard = React.createClass({
     store.session.on('change', this.updateUser)
   },
   updateGameState: function() {
-    console.log('UPDATING GAME');
-    console.log('STORE: ', store.multiplayerGame.model);
-    console.log('GET: ', store.multiplayerGame.model.get('categories'));
+    console.log('store: ', store.multiplayerGame.model.get('categories'));
     this.setState({categories: store.multiplayerGame.model.get('categories')})
   },
   updateUser: function() {
@@ -74,11 +72,10 @@ const GameBoard = React.createClass({
   },
   render: function() {
     if (this.state.categories[0]) {
-      console.log('cats: ', this.state.categories);
+      console.log('CATS ', this.state.categories);
       let gameContent = this.state.categories.map((category, i) => {
-        let clues = this.state.categories[i].clues
-        clues = _.sortBy(clues, function(clue) {
-          // console.log('CLUE',clue);
+        let clues = store.clues
+        clues = _.sortBy(clues.models, function(clue) {
           return clue.get('value')
         })
         return (
