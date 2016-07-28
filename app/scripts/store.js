@@ -1,5 +1,6 @@
 import Session from './models/Session'
 import Game from './models/Game'
+import MultiplayerGame from './models/MultiplayerGame'
 import Users from './collections/Users'
 
 let store = {
@@ -7,6 +8,10 @@ let store = {
   game: {
     fetching: false,
     model: new Game()
+  },
+  multiplayerGame: {
+    fetching: false,
+    model: new MultiplayerGame()
   },
   users: new Users(),
   settings: {
