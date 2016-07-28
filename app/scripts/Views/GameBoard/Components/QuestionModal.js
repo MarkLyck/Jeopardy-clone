@@ -94,17 +94,11 @@ const QuestionModal = React.createClass({
     let microphone;
     if (this.state.listening) {
       microphone = (
-        <span className="fa-stack fa-lg mic-button listening">
-          <i className="fa fa-circle-thin fa-stack-2x"></i>
-          <i className="fa fa-microphone fa-stack-1x"></i>
-        </span>
+        <i className="fa fa-microphone mic-button listening"></i>
       )
     } else {
       microphone = (
-        <span onClick={this.speakAnswer} className="fa-stack fa-lg mic-button">
-          <i className="fa fa-circle-thin fa-stack-2x"></i>
-          <i className="fa fa-microphone fa-stack-1x"></i>
-        </span>
+        <i className="fa fa-microphone mic-button"></i>
       )
     }
 
@@ -112,18 +106,19 @@ const QuestionModal = React.createClass({
     return (
       <div onClick={this.removeModal} className="modal-container">
         <div className="modal">
-          <h4>{this.props.category} for ${this.props.clueValue}</h4>
-          <h3>{this.props.question}</h3>
+          <h2 id="time-left">{this.state.timeLeft}</h2>
 
-          <h2>{this.state.timeLeft}</h2>
+          <h4 className="modal-category">{this.props.category} for ${this.props.clueValue}</h4>
+
+          <h3 className="modal-question">{this.props.question}</h3>
 
           {microphone}
 
           <div className="wrapper">
             <input id="questionInput" type="text" ref="questionInput" placeholder="Your Answer"/>
-            <button onClick={this.checkAnswer} className="submit-answer-btn">Submit Answer</button>
+            <button onClick={this.checkAnswer} className="submit-answer-btn">Answer</button>
           </div>
-          <button onClick={this.removeModal} className="pass-btn">Pass</button>
+          <button onClick={this.removeModal} className="pass-btn">or <span id="pass-span">Pass</span></button>
         </div>
       </div>
     )
