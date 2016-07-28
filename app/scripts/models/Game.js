@@ -2,9 +2,10 @@ import $ from 'jquery';
 import Backbone from 'backbone';
 
 import store from '../store'
+import ClueModel from './Clue'
 
 const Game = Backbone.Model.extend({
-  urlRoot: `http://jservice.io/api/`,
+  urlRoot: `https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards/`,
   defaults: {
     categories: [],
     gameNumber: 0
@@ -26,17 +27,23 @@ const Game = Backbone.Model.extend({
             return clue
           }
         })
+        usefulClues = usefulClues.map((clue) => {
+          let newClue = new ClueModel()
+          newClue.set('question', clue.question)
+          newClue.set('answer', clue.answer)
+          newClue.set('value', clue.value)
+          return newClue
+        })
+
         category.clues = usefulClues
 
         if (usefulClues.length === 5) {
           let newCategories = this.get('categories')
           newCategories.push(category)
           this.set('categories', newCategories)
+          this.trigger('change')
         } else {
           this.getCategory(Math.floor(Math.random()*18000))
-        }
-        if (this.get('categories').length === 6) {
-          this.trigger('change')
         }
       })
   }

@@ -5,7 +5,7 @@ const Clue = React.createClass({
     return {clicked: false}
   },
   clueClicked: function() {
-    let correctAnswer = this.props.clue.answer
+    let correctAnswer = this.props.clue.get('answer')
     correctAnswer = correctAnswer.replace('(', '')
     correctAnswer = correctAnswer.replace(')', '')
     correctAnswer = correctAnswer.replace('.', '')
@@ -14,12 +14,12 @@ const Clue = React.createClass({
     correctAnswer = correctAnswer.replace('</i>', '')
     correctAnswer = correctAnswer.replace(/\\/g, '');
 
-    this.props.clickHandler(this.props.clue.question, correctAnswer, this.props.clue.value, this.props.categoryName)
+    this.props.startQuestion(this.props.clue.get('question'), correctAnswer, this.props.clue.get('value'), this.props.categoryName)
     this.setState({clicked: true})
   },
   render: function() {
     if (!this.state.clicked) {
-      return (<li onClick={this.clueClicked} className="clue">${this.props.clue.value}</li>)
+      return (<li onClick={this.clueClicked} className="clue">${this.props.clue.get('value')}</li>)
     } else {
       return (<li className="clue answered"></li>)
     }

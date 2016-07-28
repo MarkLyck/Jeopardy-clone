@@ -51,12 +51,13 @@ const GameBoard = React.createClass({
     if (this.state.categories[0]) {
       let gameContent = this.state.categories.map((category, i) => {
         let clues = this.state.categories[i].clues
+        console.log('clues: ',clues);
         clues = _.sortBy(clues, function(clue) {
-          return clue.value
+          return clue.get('value')
         })
 
         return (
-          <Category clickHandler={this.startQuestion} categoryName={this.state.categories[i].title} key={i} clues={clues}/>
+          <Category startQuestion={this.startQuestion} categoryName={this.state.categories[i].title} key={i} clues={clues}/>
         )
       })
 
