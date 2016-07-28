@@ -1,8 +1,12 @@
 import React from 'react'
+import _ from 'underscore'
 
 const Modal = React.createClass({
   removeModal: function(e) {
-    this.props.removeModal()
+    let targetClassList = _.toArray(e.target.classList)
+    if (targetClassList.indexOf('modal-container') !== -1) {
+      this.props.removeModal()
+    }
   },
   render: function() {
     return (

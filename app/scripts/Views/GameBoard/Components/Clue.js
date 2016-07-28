@@ -6,12 +6,13 @@ const Clue = React.createClass({
   },
   clueClicked: function() {
     let correctAnswer = this.props.clue.answer
-    correctAnswer.replace('(', '')
-    correctAnswer.replace(')', '')
-    correctAnswer.replace('.', '')
-    correctAnswer.replace(',', '')
-    correctAnswer.replace('<i>', '')
-    correctAnswer.replace('</i>', '')
+    correctAnswer = correctAnswer.replace('(', '')
+    correctAnswer = correctAnswer.replace(')', '')
+    correctAnswer = correctAnswer.replace('.', '')
+    correctAnswer = correctAnswer.replace(',', '')
+    correctAnswer = correctAnswer.replace('<i>', '')
+    correctAnswer = correctAnswer.replace('</i>', '')
+    correctAnswer = correctAnswer.replace(/\\/g, '');
 
     this.props.clickHandler(this.props.clue.question, correctAnswer, this.props.clue.value, this.props.categoryName)
     this.setState({clicked: true})
