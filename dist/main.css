@@ -395,10 +395,11 @@ textarea {
   overflow: auto; }
 
 #game-container {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center; }
-  #game-container div {
+  #game-container > div {
     width: 100%;
     display: flex; }
 
@@ -408,32 +409,51 @@ textarea {
   margin: 0 20px;
   width: calc(100%/6); }
   .category-container .category-name {
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #88ABF3;
-    background-color: #0614AD;
-    height: 100px; }
+    height: 75px; }
   .category-container .clues-list li {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
+    height: 10vh;
     width: 100%;
-    margin: 5px 0;
-    background-color: #0614AD;
-    color: #E8AA7C;
+    margin: 20px 0;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    color: #fff;
     font-size: 2rem;
     box-sizing: border-box; }
     .category-container .clues-list li:hover {
       cursor: pointer;
-      background-color: #051194; }
+      background-color: #fff;
+      color: #555; }
 
-header nav ul {
-  display: flex; }
-  header nav ul li {
-    margin-left: 20px;
-    color: #E8AA7C; }
+header nav {
+  display: flex;
+  justify-content: space-between; }
+  header nav #logo {
+    padding: 10px;
+    height: 50px; }
+  header nav ul {
+    display: flex;
+    justify-content: flex-end; }
+    header nav ul li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      padding: 10px 20px; }
+      header nav ul li:hover {
+        cursor: pointer;
+        background: #fff;
+        color: #555; }
 
 .modal-container {
   position: fixed;
@@ -447,18 +467,38 @@ header nav ul {
   background-color: rgba(0, 0, 0, 0.5); }
   .modal-container .modal {
     background: #fff;
+    color: #000;
     padding: 40px;
     border-radius: 5px;
     width: 60%;
     display: flex;
     flex-direction: column; }
+    .modal-container .modal .wrapper {
+      display: flex; }
+      .modal-container .modal .wrapper input {
+        outline: none;
+        padding: 20px;
+        width: 80%; }
+      .modal-container .modal .wrapper button {
+        width: 20%; }
 
 #user-section {
-  background: blue;
-  color: #fff; }
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  color: #fff;
+  font-size: 3rem; }
 
-body {
-  background-color: #000; }
+#container {
+  height: 100vh;
+  background: #170d84;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #170d84 0%, #8f3993 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #170d84 0%, #8f3993 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #170d84 0%, #8f3993 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
 
 ul {
   list-style: none;
@@ -467,6 +507,8 @@ ul {
 
 a {
   text-decoration: none;
-  color: #E8AA7C; }
+  color: #fff; }
+  a:hover {
+    color: #555; }
 
 /*# sourceMappingURL=main.css.map */

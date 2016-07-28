@@ -6,7 +6,7 @@ const Clue = React.createClass({
   },
   clueClicked: function() {
     console.log('clue props:', this.props);
-    this.props.clickHandler(this.props.clue.question, this.props.clue.answer, this.props.clue.value)
+    this.props.clickHandler(this.props.clue.question, this.props.clue.answer, this.props.clue.value, this.props.categoryName)
     this.setState({clicked: true})
   },
   render: function() {

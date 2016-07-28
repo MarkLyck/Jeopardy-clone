@@ -19,6 +19,7 @@ const Game = Backbone.Model.extend({
     }
   },
   getCategory: function(id) {
+    console.log('FETCHING CATEGORY');
     $.ajax(`http://jservice.io/api/category?id=${id}`)
       .then((category) => {
 

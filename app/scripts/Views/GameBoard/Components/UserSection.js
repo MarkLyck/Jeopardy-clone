@@ -15,8 +15,7 @@ const UserSection = React.createClass({
   render: function() {
     return (
       <div id="user-section">
-        <div>{store.session.get('username')}</div>
-        <div>${store.session.get('money')}</div>
+        ${store.session.get('money')}
       </div>
     )
 

@@ -16,19 +16,19 @@ const GameBoard = React.createClass({
     return {categories: [], answering: false, question: '', answer: ''}
   },
   componentDidMount: function() {
-    let game = new GameModel()
-    game.on('change', () => {
-      this.setState({categories: game.get('categories')})
+    store.game.model.on('change', () => {
+      this.setState({categories: store.game.model.get('categories')})
     })
-    game.getGame()
+    store.game.model.getGame()
   },
-  startQuestion: function(quesion, answer, clueValue) {
+  startQuestion: function(quesion, answer, clueValue, categoryName) {
     console.log('STARTING QUESTION!');
     this.setState({
       answering: true,
       question: quesion,
       answer: answer,
-      clueValue: clueValue
+      clueValue: clueValue,
+      category: categoryName
     })
   },
   removeModal: function() {
@@ -40,12 +40,10 @@ const GameBoard = React.createClass({
       let newMoney = store.session.get('money')
       newMoney += this.state.clueValue
       store.session.set('money', newMoney)
-      console.log('store money afteR: ', store.session.get('money'));
     } else {
       console.log('WRONG ANSWER');
     }
     this.setState({answering: false})
-    console.log(isCorrect);
   },
   render: function() {
     if (this.state.categories[0]) {
@@ -64,7 +62,7 @@ const GameBoard = React.createClass({
       if (this.state.answering) {
         console.log('SHOW QUESTION MODAL');
         questionModal = (
-          <Modal removeModal={this.removeModal} sendAnswer={this.sendAnswer} clueValue={this.state.clueValue} question={this.state.question} answer={this.state.answer}/>
+          <Modal removeModal={this.removeModal} sendAnswer={this.sendAnswer} clueValue={this.state.clueValue} category={this.state.category} question={this.state.question} answer={this.state.answer}/>
         )
       }
 

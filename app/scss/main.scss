@@ -6,7 +6,15 @@
 @import "userSection";
 
 body {
-  background-color: #000;
+
+}
+
+#container {
+  height: 100vh;
+  background: #170d84; /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  #170d84 0%, #8f3993 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg,  #170d84 0%,#8f3993 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg,  #170d84 0%,#8f3993 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 ul {
@@ -17,5 +25,9 @@ ul {
 
 a {
   text-decoration: none;
-  color: $secondary-color;
+  // color: $secondary-color;
+  color: #fff;
+  &:hover {
+    color: #555;
+  }
 }
