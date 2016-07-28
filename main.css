@@ -428,6 +428,7 @@ textarea {
     border: 2px solid #fff;
     border-radius: 5px;
     color: #fff;
+    font-weight: lighter;
     font-size: 2rem;
     box-sizing: border-box; }
     .category-container .clues-list li:hover {
@@ -537,7 +538,7 @@ header nav {
       color: #51228B; }
       .modal-container .modal .mic-button:hover {
         cursor: pointer;
-        color: #1edf82; }
+        color: #451d77; }
     .modal-container .modal .listening {
       color: #df1e58; }
       .modal-container .modal .listening:hover {
@@ -557,6 +558,9 @@ header nav {
   margin-top: 10px;
   color: #fff;
   font-size: 3rem; }
+
+body {
+  font-weight: lighter; }
 
 #container {
   height: 100vh;
@@ -579,5 +583,8 @@ a {
   color: #fff; }
   a:hover {
     color: #555; }
+
+button, input {
+  outline: none; }
 
 /*# sourceMappingURL=main.css.map */
