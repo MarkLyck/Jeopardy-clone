@@ -19,9 +19,11 @@ const QuestionModal = React.createClass({
     if (answer === this.props.answer.toLowerCase()) {
       console.log('YOU ARE CORRECT!');
       this.props.sendAnswer(true)
+      clearInterval(this.state.interval);
     } else {
       console.log('YOU ARE WRONG!');
       this.props.sendAnswer(false)
+      clearInterval(this.state.interval);
     }
   },
   removeModal: function(e) {
@@ -30,6 +32,7 @@ const QuestionModal = React.createClass({
       this.thinkingMusic.pause();
       this.thinkingMusic.currentTime = 0;
       this.props.sendAnswer(false)
+      clearInterval(this.state.interval);
     }
   },
   componentDidMount: function() {
@@ -41,6 +44,7 @@ const QuestionModal = React.createClass({
         this.props.sendAnswer(false)
       }
     }, 1000);
+    this.setState({interval: countdownTimer})
   },
   speakAnswer: function() {
     this.setState({music:false, listening: true})
