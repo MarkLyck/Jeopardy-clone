@@ -17,21 +17,24 @@ const GameBoard = React.createClass({
     return {categories: [], answering: false, question: '', answer: ''}
   },
   componentDidMount: function() {
-    store.game.model.on('change', () => {
-      this.setState({categories: store.game.model.get('categories')})
-    })
+    store.game.model.on('change', this.updateGameState)
     store.game.model.getGame()
-    store.session.on('change', () => {
-      if (store.session.get('money') > store.session.get('highScore')) {
-        console.log('NEW HIGHSCORE!');
-        store.session.set('highScore', store.session.get('money'))
-        store.session.updateUser()
-      }
-    })
+    store.session.on('change', this.updateUser)
+  },
+  updateGameState: function() {
+    this.setState({categories: store.game.model.get('categories')})
+  },
+  updateUser: function() {
+    if (store.session.get('money') > store.session.get('highScore')) {
+      store.session.set('highScore', store.session.get('money'))
+      store.session.updateUser()
+    }
+  },
+  componentWillUnmount: function() {
+    store.session.off('change', this.updateUser)
+    store.game.model.off('change', this.updateGameState)
   },
   startQuestion: function(clue) {
-    console.log('STARTING QUESTION!');
-
     let correctAnswer = clue.get('answer')
     correctAnswer = correctAnswer.replace('(', '')
     correctAnswer = correctAnswer.replace(')', '')
@@ -55,13 +58,11 @@ const GameBoard = React.createClass({
   },
   sendAnswer: function(isCorrect, answer) {
     if (isCorrect) {
-      console.log('CORRECT ANSWER');
       let newMoney = store.session.get('money')
       newMoney += this.state.clueValue
       store.session.set('money', newMoney)
       this.setState({answering: 'correct'})
     } else {
-      console.log('WRONG ANSWER');
       this.setState({answering: 'wrong', userAnswer: answer})
     }
   },
@@ -79,7 +80,6 @@ const GameBoard = React.createClass({
 
       let questionModal;
       if (this.state.answering === true) {
-        console.log('SHOW QUESTION MODAL');
         questionModal = (
           <QuestionModal removeModal={this.removeModal} sendAnswer={this.sendAnswer} clue={this.state.clue}/>
         )

@@ -9,11 +9,14 @@ const LeaderBoard = React.createClass({
   },
   componentDidMount: function() {
     console.log(store.users);
-    store.users.on('update', () => {
-      console.log(store.users);
-      this.setState({users: store.users})
-    })
+    store.users.on('update', this.updateUsers)
     store.users.fetch()
+  },
+  updateUsers: function() {
+    this.setState({users: store.users})
+  },
+  componentWillUnmount: function() {
+    store.users.off('update', this.updateUsers)
   },
   render: function() {
     let sortedUsers = _.sortBy(store.users.models, function(user) {

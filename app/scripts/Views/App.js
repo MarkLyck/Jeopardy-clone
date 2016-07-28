@@ -40,10 +40,13 @@ const App = React.createClass({
     hashHistory.push('/play')
   },
   componentDidMount: function() {
-    // This will update if we log in / out
-    store.session.on('change', () => {
-      this.setState({showModal: false})
-    })
+    store.session.on('change', this.stopModal)
+  },
+  stopModal: function() {
+    this.setState({showModal: false})
+  },
+  componentWillUnmount: function() {
+    store.session.off('change', this.stopModal)
   },
   render: function() {
     let navButtons
