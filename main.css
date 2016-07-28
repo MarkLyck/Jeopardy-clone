@@ -473,25 +473,75 @@ header nav {
   background-color: rgba(0, 0, 0, 0.5); }
   .modal-container .modal {
     background: #fff;
-    color: #000;
+    color: #555;
     padding: 40px;
-    border-radius: 5px;
     width: 60%;
     display: flex;
     flex-direction: column;
-    align-items: center; }
+    align-items: center;
+    position: relative; }
+    .modal-container .modal #time-left {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -95px;
+      background: #51228B;
+      color: #fff;
+      height: 150px;
+      width: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 10px solid #fff;
+      border-radius: 50%;
+      box-sizing: border-box;
+      font-weight: lighter; }
+    .modal-container .modal .modal-category {
+      margin-top: 50px;
+      align-self: flex-start; }
+    .modal-container .modal .modal-question {
+      font-weight: lighter; }
     .modal-container .modal .wrapper {
-      display: flex; }
+      margin: 10px 0;
+      display: flex;
+      width: 100%; }
       .modal-container .modal .wrapper input {
         outline: none;
         padding: 20px;
-        width: 80%; }
-      .modal-container .modal .wrapper button {
-        width: 20%; }
+        width: 80%;
+        border: none;
+        background: #f2f2f2; }
+      .modal-container .modal .wrapper .submit-answer-btn {
+        width: 20%;
+        padding: 20px;
+        border: none;
+        background-color: #51228B;
+        color: #fff; }
+        .modal-container .modal .wrapper .submit-answer-btn:hover {
+          cursor: pointer;
+          background-color: #451d77; }
+    .modal-container .modal .pass-btn {
+      background: none;
+      border: none; }
+      .modal-container .modal .pass-btn #pass-span {
+        color: #df1e58; }
+        .modal-container .modal .pass-btn #pass-span:hover {
+          cursor: pointer;
+          color: #c91b4f; }
+      .modal-container .modal .pass-btn:hover {
+        cursor: pointer;
+        color: #c91b4f; }
     .modal-container .modal .mic-button {
-      font-size: 3rem; }
+      margin: 20px;
+      font-size: 3rem;
+      color: #51228B; }
+      .modal-container .modal .mic-button:hover {
+        cursor: pointer;
+        color: #1edf82; }
     .modal-container .modal .listening {
       color: #df1e58; }
+      .modal-container .modal .listening:hover {
+        color: #df1e58; }
 
 .fa-check {
   color: #1edf82;
