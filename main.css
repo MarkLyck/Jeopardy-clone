@@ -394,6 +394,9 @@ optgroup {
 textarea {
   overflow: auto; }
 
+@font-face {
+  font-family: pokemonTitle;
+  src: url("assets/fonts/PokemonSolid.ttf"); }
 #game-container {
   margin-top: 20px;
   display: flex;
@@ -472,7 +475,8 @@ header nav {
     border-radius: 5px;
     width: 60%;
     display: flex;
-    flex-direction: column; }
+    flex-direction: column;
+    align-items: center; }
     .modal-container .modal .wrapper {
       display: flex; }
       .modal-container .modal .wrapper input {
@@ -481,6 +485,14 @@ header nav {
         width: 80%; }
       .modal-container .modal .wrapper button {
         width: 20%; }
+
+.fa-check {
+  color: #1edf82;
+  font-size: 3rem; }
+
+.fa-times {
+  color: #df1e58;
+  font-size: 3rem; }
 
 #user-section {
   display: flex;
