@@ -566,6 +566,21 @@ header nav {
   color: #fff;
   font-size: 3rem; }
 
+#highscore-tabs {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 20px;
+  color: #fff; }
+  #highscore-tabs h3 {
+    font-weight: normal; }
+
+#highscore-list .user {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  color: #fff;
+  border-bottom: 1px solid #fff; }
+
 body {
   font-weight: lighter; }
 
