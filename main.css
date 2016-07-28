@@ -432,6 +432,8 @@ textarea {
     font-weight: lighter;
     font-size: 2rem;
     box-sizing: border-box; }
+    .category-container .clues-list li .fa {
+      color: #fff; }
     .category-container .clues-list li:hover {
       cursor: pointer;
       background-color: #fff;
