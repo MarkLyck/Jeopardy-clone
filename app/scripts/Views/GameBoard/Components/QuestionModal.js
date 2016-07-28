@@ -14,6 +14,8 @@ const QuestionModal = React.createClass({
     let answer = this.refs.questionInput.value.toLowerCase()
     answer = answer.replace('what is', '')
     answer = answer.replace('who is', '')
+    answer = answer.replace(',', '')
+    answer = answer.replace('.', '')
     answer = answer.trim()
 
     if (answer === this.props.clue.get('answer').toLowerCase()) {

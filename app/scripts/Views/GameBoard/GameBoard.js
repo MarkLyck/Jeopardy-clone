@@ -21,6 +21,13 @@ const GameBoard = React.createClass({
       this.setState({categories: store.game.model.get('categories')})
     })
     store.game.model.getGame()
+    store.session.on('change', () => {
+      if (store.session.get('money') > store.session.get('highScore')) {
+        console.log('NEW HIGHSCORE!');
+        store.session.set('highScore', store.session.get('money'))
+        store.session.updateUser()
+      }
+    })
   },
   startQuestion: function(clue) {
     console.log('STARTING QUESTION!');

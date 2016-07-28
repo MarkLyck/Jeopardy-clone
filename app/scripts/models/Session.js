@@ -9,14 +9,13 @@ const Session = Backbone.Model.extend({
   defaults: {
     username: '',
     money: 0,
-    topScore: 0
+    highScore: 0
   },
   parse: function(response) {
     if (response) {
       return {
         authtoken: response._kmd.authtoken,
         username: response.username,
-        cards: response.cards,
         userId: response._id
       }
     }
@@ -44,7 +43,7 @@ const Session = Backbone.Model.extend({
       success: function(model, response) {
         model.unset('password')
         localStorage.authtoken = response._kmd.authtoken
-        hashHistory.push('/')
+        hashHistory.push('/play')
       },
       error: function(model, response) {
         console.log('ERROR: ', arguments);
@@ -63,7 +62,7 @@ const Session = Backbone.Model.extend({
     this.save(null, {
       type: 'PUT',
       url: `https://baas.kinvey.com/user/${store.settings.appKey}/${this.get('userId')}`,
-    })
+    }, {silent: true})
   }
 })
 

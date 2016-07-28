@@ -5,26 +5,15 @@ const Clue = React.createClass({
     return {answered: false}
   },
   clueClicked: function() {
-    // let correctAnswer = this.props.clue.get('answer')
-    // correctAnswer = correctAnswer.replace('(', '')
-    // correctAnswer = correctAnswer.replace(')', '')
-    // correctAnswer = correctAnswer.replace('.', '')
-    // correctAnswer = correctAnswer.replace(',', '')
-    // correctAnswer = correctAnswer.replace('<i>', '')
-    // correctAnswer = correctAnswer.replace('</i>', '')
-    // correctAnswer = correctAnswer.replace(/\\/g, '');
-
     this.props.startQuestion(this.props.clue);
     this.setState({clicked: true})
   },
   componentDidMount: function() {
     this.props.clue.on('change', () => {
-      console.log('CLUE CHANGED STATE: ', this.props.clue);
       this.setState({answered: this.props.clue.get('answered')})
     })
   },
   render: function() {
-    console.log('cluestate: ', this.state.answered);
     if (!this.state.answered) {
       return (<li onClick={this.clueClicked} className="clue">${this.props.clue.get('value')}</li>)
     } else if (this.state.answered === 'correct'){
