@@ -8,6 +8,7 @@ import store from '../../store'
 import GameModel from '../../models/Game'
 
 import Category from './components/Category'
+import QuestionModal from './components/QuestionModal'
 import Modal from './components/Modal'
 import UserSection from './components/UserSection'
 
@@ -40,10 +41,12 @@ const GameBoard = React.createClass({
       let newMoney = store.session.get('money')
       newMoney += this.state.clueValue
       store.session.set('money', newMoney)
+      this.setState({answering: 'correct'})
     } else {
       console.log('WRONG ANSWER');
+      this.setState({answering: 'wrong'})
     }
-    this.setState({answering: false})
+    // this.setState({answering: false})
   },
   render: function() {
     if (this.state.categories[0]) {
@@ -59,10 +62,26 @@ const GameBoard = React.createClass({
       })
 
       let questionModal;
-      if (this.state.answering) {
+      console.log('answering state: ', this.state.answering);
+      if (this.state.answering === true) {
         console.log('SHOW QUESTION MODAL');
         questionModal = (
-          <Modal removeModal={this.removeModal} sendAnswer={this.sendAnswer} clueValue={this.state.clueValue} category={this.state.category} question={this.state.question} answer={this.state.answer}/>
+          <QuestionModal removeModal={this.removeModal} sendAnswer={this.sendAnswer} clueValue={this.state.clueValue} category={this.state.category} question={this.state.question} answer={this.state.answer}/>
+        )
+      } else if (this.state.answering === 'correct') {
+        questionModal = (
+          <Modal removeModal={this.removeModal}>
+            <i className="fa fa-check"/>
+            <h2>Correct!</h2>
+          </Modal>
+        )
+      } else if (this.state.answering === 'wrong') {
+        questionModal = (
+          <Modal removeModal={this.removeModal}>
+            <i className="fa fa-times"/>
+            <h2>Wrong!</h2>
+            <h3>The correct answer was: {this.state.answer}</h3>
+          </Modal>
         )
       }
 

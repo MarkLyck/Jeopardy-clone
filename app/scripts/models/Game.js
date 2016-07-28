@@ -10,12 +10,9 @@ const Game = Backbone.Model.extend({
     gameNumber: 0
   },
   getGame: function() {
-    // console.log('getting game');
-    // console.log(store.session.categoriesSeen);
     this.set('categories', [])
     for(let i = 1; i <= 6; i++) {
-      this.getCategory(store.session.get('categoriesSeen'))
-      store.session.set('categoriesSeen', store.session.get('categoriesSeen') + 1)
+      this.getCategory(Math.floor(Math.random()*18000))
     }
   },
   getCategory: function(id) {
@@ -37,8 +34,7 @@ const Game = Backbone.Model.extend({
           newCategories.push(category)
           this.set('categories', newCategories)
         } else {
-          store.session.set('categoriesSeen', store.session.get('categoriesSeen') + 1)
-          this.getCategory(store.session.get('categoriesSeen'))
+          this.getCategory(Math.floor(Math.random()*18000))
         }
         if (this.get('categories').length === 6) {
           this.trigger('change')

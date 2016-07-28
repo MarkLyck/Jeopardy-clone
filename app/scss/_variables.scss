@@ -1,3 +1,8 @@
 $primary-color: #0614AD;
 $secondary-color: #E8AA7C;
 $title-color: #88ABF3;
+
+@font-face {
+  font-family: pokemonTitle;
+  src: url('assets/fonts/PokemonSolid.ttf');
+}

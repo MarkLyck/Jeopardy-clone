@@ -8,7 +8,6 @@ const Session = Backbone.Model.extend({
   idAttribute: '_id',
   defaults: {
     username: '',
-    categoriesSeen: 1,
     money: 0
   },
   parse: function(response) {
