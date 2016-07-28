@@ -524,9 +524,9 @@ header nav {
     .modal-container .modal .pass-btn {
       background: none;
       border: none; }
-      .modal-container .modal .pass-btn #pass-span {
+      .modal-container .modal .pass-btn .pass-span {
         color: #df1e58; }
-        .modal-container .modal .pass-btn #pass-span:hover {
+        .modal-container .modal .pass-btn .pass-span:hover {
           cursor: pointer;
           color: #c91b4f; }
       .modal-container .modal .pass-btn:hover {
@@ -572,6 +572,9 @@ body {
   /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(135deg, #170d84 0%, #8f3993 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
+
+h2, h3 {
+  font-weight: lighter; }
 
 ul {
   list-style: none;

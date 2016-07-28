@@ -26,7 +26,7 @@ const QuestionModal = React.createClass({
   },
   removeModal: function(e) {
     let targetClassList = _.toArray(e.target.classList)
-    if (targetClassList.indexOf('modal-container') !== -1 || targetClassList.indexOf('pass-btn') !== -1) {
+    if (targetClassList.indexOf('modal-container') !== -1 || targetClassList.indexOf('pass-btn') !== -1 ||  targetClassList.indexOf('pass-span') !== -1) {
       this.thinkingMusic.pause();
       this.thinkingMusic.currentTime = 0;
       this.props.sendAnswer(false)
@@ -120,7 +120,7 @@ const QuestionModal = React.createClass({
             <input id="questionInput" type="text" ref="questionInput" placeholder="Your Answer"/>
             <button onClick={this.checkAnswer} className="submit-answer-btn">Answer</button>
           </div>
-          <button onClick={this.removeModal} className="pass-btn">or <span id="pass-span">Pass</span></button>
+          <button onClick={this.removeModal} className="pass-btn">or <span className="pass-span">Pass</span></button>
         </div>
       </div>
     )
