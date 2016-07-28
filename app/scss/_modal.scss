@@ -88,7 +88,7 @@
       color: $primary-color;
       &:hover {
         cursor: pointer;
-        color: #1edf82;
+        color: darken($primary-color, 5%);
       }
     }
     .listening {

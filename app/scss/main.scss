@@ -6,7 +6,7 @@
 @import "userSection";
 
 body {
-
+  font-weight: lighter;
 }
 
 #container {
@@ -30,4 +30,8 @@ a {
   &:hover {
     color: #555;
   }
+}
+
+button, input {
+  outline: none;
 }

@@ -47,6 +47,8 @@ const QuestionModal = React.createClass({
     this.thinkingMusic.pause();
     this.thinkingMusic.currentTime = 0;
 
+    let ignore_onend = false
+
     var recognition = new webkitSpeechRecognition();
 
     recognition.onresult = (event) => {
@@ -54,26 +56,20 @@ const QuestionModal = React.createClass({
       this.refs.questionInput.value = event.results[0][0].transcript
       this.checkAnswer()
     }
-    recognition.onerror = function(event) {
+    recognition.onerror = (event) => {
       this.setState({music: true, listening: false})
       if (event.error == 'no-speech') {
         console.log('### NO SPEECH ###');
-        start_img.src = 'mic.gif';
-        showInfo('info_no_speech');
         ignore_onend = true;
       } else if (event.error == 'audio-capture') {
         console.log('### NO AUDIO DEVICE ###');
         throw new Error('### NO AUDIO DEVICE ###');
-        start_img.src = 'mic.gif';
-        showInfo('info_no_microphone');
         ignore_onend = true;
       } else if (event.error == 'not-allowed') {
         if (event.timeStamp - start_timestamp < 100) {
-          showInfo('info_blocked');
           console.log('### SPEECH BLOCKED ###');
           throw new Error('### SPEECH BLOCKED ###');
         } else {
-          showInfo('info_denied');
           console.log('### SPEECH DENIED ###');
           throw new Error('### SPEECH DENIED ###');
         }
@@ -83,6 +79,12 @@ const QuestionModal = React.createClass({
         throw new Error('### UNKNOWN MIC ERROR ###');
       }
     };
+    recognition.onend = (event) => {
+      if (ignore_onend) {
+        return
+      }
+      this.setState({music: true, listening: false})
+    }
     recognition.start();
 
   },
@@ -94,11 +96,11 @@ const QuestionModal = React.createClass({
     let microphone;
     if (this.state.listening) {
       microphone = (
-        <i className="fa fa-microphone mic-button listening"></i>
+        <i onClick={this.speakAnswer} className="fa fa-microphone mic-button listening"></i>
       )
     } else {
       microphone = (
-        <i className="fa fa-microphone mic-button"></i>
+        <i onClick={this.speakAnswer} className="fa fa-microphone mic-button"></i>
       )
     }
 

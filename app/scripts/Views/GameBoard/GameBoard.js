@@ -9,7 +9,7 @@ import GameModel from '../../models/Game'
 
 import Category from './components/Category'
 import QuestionModal from './components/QuestionModal'
-import Modal from './components/Modal'
+import Modal from '../gComponents/Modal'
 import UserSection from './components/UserSection'
 
 const GameBoard = React.createClass({

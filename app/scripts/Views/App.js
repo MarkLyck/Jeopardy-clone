@@ -13,8 +13,8 @@ const App = React.createClass({
             <img id="logo" src="assets/images/logo.png"/>
             <ul>
               <li><Link to="/leaderboards">Leaderboards</Link></li>
-              <li><Link to="/login">Login</Link></li>
-              <li><Link to="/signup">Signup</Link></li>
+              <li onClick={this.showLogin}>Login</li>
+              <li onClick={this.showSignup}>Signup</li>
               <li onClick={this.logout}>Logout</li>
             </ul>
           </nav>
