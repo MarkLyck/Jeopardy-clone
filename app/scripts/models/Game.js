@@ -19,7 +19,6 @@ const Game = Backbone.Model.extend({
     console.log('FETCHING CATEGORY');
     $.ajax(`http://jservice.io/api/category?id=${id}`)
       .then((category) => {
-
         let filterValue = 200
         let usefulClues = category.clues.filter((clue) => {
           if (clue.value === filterValue) {

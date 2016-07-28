@@ -62,7 +62,6 @@ const GameBoard = React.createClass({
       })
 
       let questionModal;
-      console.log('answering state: ', this.state.answering);
       if (this.state.answering === true) {
         console.log('SHOW QUESTION MODAL');
         questionModal = (
