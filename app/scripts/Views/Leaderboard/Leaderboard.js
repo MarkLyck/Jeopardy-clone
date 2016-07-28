@@ -22,6 +22,7 @@ const LeaderBoard = React.createClass({
     let sortedUsers = _.sortBy(store.users.models, function(user) {
       return user.get('highScore')
     })
+    sortedUsers = sortedUsers.reverse()
     let users = sortedUsers.map((user, i) => {
       console.log('user: ', user);
       return (
