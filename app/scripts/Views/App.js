@@ -39,9 +39,13 @@ const App = React.createClass({
     this.setState({showModal: false})
   },
   newGame: function() {
-    hashHistory.push('/play')
-    store.game.model.clear()
-    store.game.model.getGame()
+    console.log(this.props.location.pathname);
+    if (this.props.location.pathname === '/leaderboards') {
+      hashHistory.push('/play')
+    } else {
+      store.game.model.clear()
+      store.game.model.getGame()
+    }
   },
   componentDidMount: function() {
     store.session.on('change', this.stopModal)
