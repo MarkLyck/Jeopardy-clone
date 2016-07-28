@@ -485,6 +485,10 @@ header nav {
         width: 80%; }
       .modal-container .modal .wrapper button {
         width: 20%; }
+    .modal-container .modal .mic-button {
+      font-size: 3rem; }
+    .modal-container .modal .listening {
+      color: #df1e58; }
 
 .fa-check {
   color: #1edf82;
