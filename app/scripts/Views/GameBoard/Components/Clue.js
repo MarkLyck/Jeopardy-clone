@@ -20,7 +20,7 @@ const Clue = React.createClass({
     if (!this.state.clicked) {
       return (<li onClick={this.clueClicked} className="clue">${this.props.clue.value}</li>)
     } else {
-      return (<li className="clue"></li>)
+      return (<li className="clue answered"></li>)
     }
 
   }

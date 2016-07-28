@@ -46,7 +46,6 @@ const GameBoard = React.createClass({
       console.log('WRONG ANSWER');
       this.setState({answering: 'wrong'})
     }
-    // this.setState({answering: false})
   },
   render: function() {
     if (this.state.categories[0]) {

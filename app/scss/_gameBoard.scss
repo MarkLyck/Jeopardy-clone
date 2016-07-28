@@ -43,5 +43,11 @@
         color: #555;
       }
     }
+    .answered {
+      &:hover {
+        cursor: auto;
+        background: none;
+      }
+    }
   }
 }

@@ -33,20 +33,13 @@ const QuestionModal = React.createClass({
     }
   },
   componentDidMount: function() {
-    console.log('COMPONENT MOUNTED');
-    let secondsLeft = this.state.timeLeft
-
     let countdownTimer = setInterval(() => {
-      // console.log(this.state.timeLeft);
       if (this.state.timeLeft !== 0) {
-        // console.log('interval');
-        secondsLeft -= 1;
-        this.setState({timeLeft: secondsLeft})
+        this.setState({timeLeft: this.state.timeLeft -1})
       } else {
         clearInterval(countdownTimer);
         this.props.sendAnswer(false)
       }
-
     }, 1000);
   },
   speakAnswer: function() {
@@ -68,15 +61,13 @@ const QuestionModal = React.createClass({
         start_img.src = 'mic.gif';
         showInfo('info_no_speech');
         ignore_onend = true;
-      }
-      if (event.error == 'audio-capture') {
+      } else if (event.error == 'audio-capture') {
         console.log('### NO AUDIO DEVICE ###');
         throw new Error('### NO AUDIO DEVICE ###');
         start_img.src = 'mic.gif';
         showInfo('info_no_microphone');
         ignore_onend = true;
-      }
-      if (event.error == 'not-allowed') {
+      } else if (event.error == 'not-allowed') {
         if (event.timeStamp - start_timestamp < 100) {
           showInfo('info_blocked');
           console.log('### SPEECH BLOCKED ###');
@@ -87,6 +78,9 @@ const QuestionModal = React.createClass({
           throw new Error('### SPEECH DENIED ###');
         }
         ignore_onend = true;
+      } else {
+        console.log('### UNKNOWN RECORDING ERROR ###');
+        throw new Error('### UNKNOWN MIC ERROR ###');
       }
     };
     recognition.start();
@@ -100,7 +94,7 @@ const QuestionModal = React.createClass({
     let microphone;
     if (this.state.listening) {
       microphone = (
-        <span onClick={this.speakAnswer} className="fa-stack fa-lg mic-button listening">
+        <span className="fa-stack fa-lg mic-button listening">
           <i className="fa fa-circle-thin fa-stack-2x"></i>
           <i className="fa fa-microphone fa-stack-1x"></i>
         </span>
