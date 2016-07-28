@@ -36,6 +36,9 @@ const App = React.createClass({
   removeModal: function() {
     this.setState({showModal: false})
   },
+  newGame: function() {
+    hashHistory.push('/play')
+  },
   componentDidMount: function() {
     // This will update if we log in / out
     store.session.on('change', () => {
@@ -44,9 +47,10 @@ const App = React.createClass({
   },
   render: function() {
     let navButtons
-    if (store.session.get('authtoken')) {
+    if (store.session.get('authtoken') || localStorage.authtoken) {
       navButtons = (
         <ul>
+          <li onClick={this.newGame}>New Game</li>
           <li onClick={this.gotoLeaderboards}>Leaderboards</li>
           <li onClick={this.logout}>Logout</li>
         </ul>
@@ -54,6 +58,7 @@ const App = React.createClass({
     } else {
       navButtons = (
         <ul>
+          <li onClick={this.newGame}>New Game</li>
           <li onClick={this.gotoLeaderboards}>Leaderboards</li>
           <li onClick={this.showLogin}>Login</li>
           <li onClick={this.showSignup}>Signup</li>
