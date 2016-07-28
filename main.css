@@ -416,7 +416,8 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #88ABF3;
+    color: #fff;
+    font-weight: normal;
     height: 75px; }
   .category-container .clues-list li {
     display: flex;
@@ -426,7 +427,7 @@ textarea {
     width: 100%;
     margin: 20px 0;
     border: 2px solid #fff;
-    border-radius: 5px;
+    border-radius: 3px;
     color: #fff;
     font-weight: lighter;
     font-size: 2rem;
@@ -486,7 +487,7 @@ header nav {
       left: 50%;
       transform: translateX(-50%);
       top: -95px;
-      background: #51228B;
+      background: #00C69F;
       color: #fff;
       height: 150px;
       width: 150px;
@@ -516,11 +517,11 @@ header nav {
         width: 20%;
         padding: 20px;
         border: none;
-        background-color: #51228B;
+        background-color: #00C69F;
         color: #fff; }
         .modal-container .modal .wrapper .submit-answer-btn:hover {
           cursor: pointer;
-          background-color: #451d77; }
+          background-color: #00ad8b; }
     .modal-container .modal .pass-btn {
       background: none;
       border: none; }
@@ -535,10 +536,10 @@ header nav {
     .modal-container .modal .mic-button {
       margin: 20px;
       font-size: 3rem;
-      color: #51228B; }
+      color: #00C69F; }
       .modal-container .modal .mic-button:hover {
         cursor: pointer;
-        color: #451d77; }
+        color: #00ad8b; }
     .modal-container .modal .listening {
       color: #df1e58; }
       .modal-container .modal .listening:hover {
@@ -552,6 +553,10 @@ header nav {
   color: #df1e58;
   font-size: 3rem; }
 
+.correct-answer {
+  font-weight: normal;
+  text-decoration: underline; }
+
 #user-section {
   display: flex;
   justify-content: center;
@@ -564,13 +569,13 @@ body {
 
 #container {
   height: 100vh;
-  background: #170d84;
+  background: #00C69F;
   /* Old browsers */
-  background: -moz-linear-gradient(-45deg, #170d84 0%, #8f3993 100%);
+  background: -moz-linear-gradient(-45deg, #00C69F 0%, #00B1E2 100%);
   /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, #170d84 0%, #8f3993 100%);
+  background: -webkit-linear-gradient(-45deg, #00C69F 0%, #00B1E2 100%);
   /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg, #170d84 0%, #8f3993 100%);
+  background: linear-gradient(135deg, #00C69F 0%, #00B1E2 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
 
 h2, h3 {
