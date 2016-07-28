@@ -20,12 +20,12 @@ const QuestionModal = React.createClass({
 
     if (answer === this.props.clue.get('answer').toLowerCase()) {
       console.log('YOU ARE CORRECT!');
-      this.props.sendAnswer(true)
+      this.props.sendAnswer(true, answer)
       clearInterval(this.state.interval);
       this.props.clue.set('answered', 'correct')
     } else {
       console.log('YOU ARE WRONG!');
-      this.props.sendAnswer(false)
+      this.props.sendAnswer(false, answer)
       clearInterval(this.state.interval);
       this.props.clue.set('answered', 'wrong')
     }

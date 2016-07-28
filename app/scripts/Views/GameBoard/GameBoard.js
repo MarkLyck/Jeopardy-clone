@@ -53,7 +53,7 @@ const GameBoard = React.createClass({
   removeModal: function() {
     this.setState({answering: false})
   },
-  sendAnswer: function(isCorrect) {
+  sendAnswer: function(isCorrect, answer) {
     if (isCorrect) {
       console.log('CORRECT ANSWER');
       let newMoney = store.session.get('money')
@@ -62,7 +62,7 @@ const GameBoard = React.createClass({
       this.setState({answering: 'correct'})
     } else {
       console.log('WRONG ANSWER');
-      this.setState({answering: 'wrong'})
+      this.setState({answering: 'wrong', userAnswer: answer})
     }
   },
   render: function() {
@@ -96,6 +96,7 @@ const GameBoard = React.createClass({
             <i className="fa fa-times"/>
             <h2>Wrong!</h2>
             <h3>The correct answer was: <span className="correct-answer">{this.state.answer}</span></h3>
+            <h3>Your answer was: <span className="correct-answer">{this.state.userAnswer}</span></h3>
           </Modal>
         )
       }

@@ -1,5 +1,6 @@
 import Session from './models/Session'
 import Game from './models/Game'
+import Users from './collections/Users'
 
 let store = {
   session: new Session(),
@@ -7,6 +8,7 @@ let store = {
     fetching: false,
     model: new Game()
   },
+  users: new Users(),
   settings: {
     appKey: 'kid_BJXvpPIu',
     appSecret: '7b43f80a2472447c8133579a204c282a',
