@@ -5,7 +5,15 @@ const Clue = React.createClass({
     return {clicked: false}
   },
   clueClicked: function() {
-    this.props.clickHandler(this.props.clue.question, this.props.clue.answer, this.props.clue.value, this.props.categoryName)
+    let correctAnswer = this.props.clue.answer
+    correctAnswer.replace('(', '')
+    correctAnswer.replace(')', '')
+    correctAnswer.replace('.', '')
+    correctAnswer.replace(',', '')
+    correctAnswer.replace('<i>', '')
+    correctAnswer.replace('</i>', '')
+
+    this.props.clickHandler(this.props.clue.question, correctAnswer, this.props.clue.value, this.props.categoryName)
     this.setState({clicked: true})
   },
   render: function() {

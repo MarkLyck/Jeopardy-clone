@@ -16,14 +16,6 @@ const QuestionModal = React.createClass({
     answer = answer.replace('who is', '')
     answer = answer.trim()
 
-    let correctAnswer = this.props.answer.toLowerCase()
-    correctAnswer.replace('(', '')
-    correctAnswer.replace(')', '')
-    correctAnswer.replace('.', '')
-    correctAnswer.replace(',', '')
-    correctAnswer.replace('<i>', '')
-    correctAnswer.replace('</i>', '')
-
     if (answer === this.props.answer.toLowerCase()) {
       console.log('YOU ARE CORRECT!');
       this.props.sendAnswer(true)
