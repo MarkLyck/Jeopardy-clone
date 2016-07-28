@@ -24,14 +24,17 @@ const LeaderBoard = React.createClass({
       return (
         <li className="user" key={i}>
           <h3 className="username">{user.get('username')}</h3>
-          <h3 className="highScore">{user.get('highScore')}</h3>
+          <h3 className="highScore">${user.get('highScore')}</h3>
         </li>
       )
     })
     return (
-      <ul id="highscore-list">
-        {users}
-      </ul>
+      <div>
+        <div id="highscore-tabs"><h3>Username</h3><h3>Highscore</h3></div>
+        <ul id="highscore-list">
+          {users}
+        </ul>
+      </div>
     )
   }
 })

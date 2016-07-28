@@ -4,6 +4,7 @@
 @import "header";
 @import "modal";
 @import "userSection";
+@import "leaderboard";
 
 body {
   font-weight: lighter;
@@ -11,7 +12,7 @@ body {
 
 #container {
   height: 100vh;
-  
+
   background: $primary-color; /* Old browsers */
   background: -moz-linear-gradient(-45deg,  $primary-color 0%, $secondary-color 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(-45deg,  $primary-color 0%,$secondary-color 100%); /* Chrome10-25,Safari5.1-6 */
