@@ -22,6 +22,7 @@ const GameBoard = React.createClass({
     store.session.on('change', this.updateUser)
   },
   updateGameState: function() {
+    console.log('UPDATING GAME');
     this.setState({categories: store.game.model.get('categories')})
   },
   updateUser: function() {
@@ -29,10 +30,6 @@ const GameBoard = React.createClass({
       store.session.set('highScore', store.session.get('money'))
       store.session.updateUser()
     }
-  },
-  componentWillUnmount: function() {
-    store.session.off('change', this.updateUser)
-    store.game.model.off('change', this.updateGameState)
   },
   startQuestion: function(clue) {
     let correctAnswer = clue.get('answer')
@@ -65,6 +62,10 @@ const GameBoard = React.createClass({
     } else {
       this.setState({answering: 'wrong', userAnswer: answer})
     }
+  },
+  componentWillUnmount: function() {
+    store.session.off('change', this.updateUser)
+    store.game.model.off('change', this.updateGameState)
   },
   render: function() {
     if (this.state.categories[0]) {

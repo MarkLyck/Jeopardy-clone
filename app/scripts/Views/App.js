@@ -3,6 +3,8 @@ import {hashHistory} from 'react-router'
 
 import store from '../store'
 
+import Game from '../models/Game'
+
 import Modal from './gComponents/Modal'
 
 const App = React.createClass({
@@ -38,6 +40,8 @@ const App = React.createClass({
   },
   newGame: function() {
     hashHistory.push('/play')
+    store.game.model.clear()
+    store.game.model.getGame()
   },
   componentDidMount: function() {
     store.session.on('change', this.stopModal)
