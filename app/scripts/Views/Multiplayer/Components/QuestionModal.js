@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import $ from 'jquery'
 import _ from 'underscore'
 
+import stringSimilarity from 'string-similarity'
+
 const QuestionModal = React.createClass({
   getInitialState: function() {
     return {timeLeft: 30, music:true, listening: false}
@@ -18,7 +20,7 @@ const QuestionModal = React.createClass({
     answer = answer.replace('.', '')
     answer = answer.trim()
 
-    if (answer === this.props.clue.get('answer').toLowerCase()) {
+    if (stringSimilarity.compareTwoStrings(answer, this.props.clue.get('answer').toLowerCase()) >= 0.75) {
       console.log('YOU ARE CORRECT!');
       this.props.sendAnswer(true, answer)
       clearInterval(this.state.interval);
