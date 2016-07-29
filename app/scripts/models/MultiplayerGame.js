@@ -11,9 +11,25 @@ const Game = Backbone.Model.extend({
     categories: [],
     players: [],
     playerCount: 1,
-    turn: ''
+    turn: '',
+    answered: false,
+    answerering: false,
+    clueId: 0,
+    created: new Date()
   },
   idAttribute: '_id',
+  nextTurn: function() {
+
+  },
+  startFetching: function() {
+    let fetchingInterval = window.setInterval(() => {
+      this.fetch({
+        success: function(response) {
+          console.log('UPDATED GAME');
+        }
+      })
+    }, 2000);
+  },
   getGame: function() {
     store.clues.reset()
     $.ajax('https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards?query={"playerCount":{"$lt": 3}}').then((response) => {
@@ -61,12 +77,24 @@ const Game = Backbone.Model.extend({
           this.set('categories', fixedCategories)
 
           let players = this.get('players')
-          players.push({username: store.session.get('username'), money: 0})
-          this.set('players', players)
-          let playerCount = this.get('playerCount')
-          playerCount += 1
-          this.set('playerCount', playerCount)
-          this.save()
+
+          let playerAlreadyInGame = false
+          players.forEach(player => {
+            if (player.username === store.session.get('username')) {
+              playerAlreadyInGame = true
+            }
+          })
+          if (!playerAlreadyInGame) {
+            players.push({username: store.session.get('username'), money: 0})
+            console.log('PLAYERS: ', players);
+            this.set('players', players)
+
+            let playerCount = this.get('playerCount')
+            playerCount += 1
+            this.set('playerCount', playerCount)
+            this.save()
+          }
+          this.startFetching()
         }
       }
     })
@@ -116,6 +144,7 @@ const Game = Backbone.Model.extend({
         if (this.get('categories').length === 6) {
           console.log('FETCHED ALL CATEGORIES');
           this.save()
+          this.startFetching()
           if (store.clues.length === 30) {
             store.clues.trigger('gotAllClues')
           }

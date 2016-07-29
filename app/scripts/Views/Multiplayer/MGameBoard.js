@@ -24,7 +24,22 @@ const GameBoard = React.createClass({
     store.session.on('change', this.updateUser)
   },
   updateGameState: function() {
-    this.setState({categories: store.multiplayerGame.model.get('categories'), players: store.multiplayerGame.model.get('players')})
+    console.log('UPDAING CAMESTATE');
+    if (store.multiplayerGame.model.get('answering')) {
+      this.setState({
+        categories: store.multiplayerGame.model.get('categories'),
+        players: store.multiplayerGame.model.get('players'),
+        answering: true,
+        clue: store.clues.get(store.multiplayerGame.model.get('clueId')),
+        question: store.multiplayerGame.model.get('question'),
+        answer: store.multiplayerGame.model.get('answer')
+      })
+    } else {
+      this.setState({
+        categories: store.multiplayerGame.model.get('categories'),
+        players: store.multiplayerGame.model.get('players'),
+      })
+    }
   },
   updateUser: function() {
     if (store.session.get('money') > store.session.get('highScore')) {
@@ -51,6 +66,12 @@ const GameBoard = React.createClass({
       clueValue: clue.get('value'),
       category: clue.get('category')
     })
+    store.multiplayerGame.model.set('question', clue.get('question'))
+    store.multiplayerGame.model.set('clueId', clue.get('id'))
+    store.multiplayerGame.model.set('answer', correctAnswer)
+    store.multiplayerGame.model.set('answered', false)
+    store.multiplayerGame.model.set('answering', true)
+    store.multiplayerGame.model.save()
   },
   removeModal: function() {
     this.setState({answering: false})

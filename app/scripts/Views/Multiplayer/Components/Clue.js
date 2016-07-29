@@ -7,8 +7,16 @@ const Clue = React.createClass({
     return {answered: false}
   },
   clueClicked: function() {
-    this.props.startQuestion(store.clues.get(this.props.clue));
-    this.setState({clicked: true})
+    if (store.multiplayerGame.model.get('playerCount') === 3 && store.multiplayerGame.model.get('turn') === store.session.get('username')) {
+      this.props.startQuestion(store.clues.get(this.props.clue));
+      this.setState({clicked: true})
+    } else {
+      if (store.multiplayerGame.model.get('playerCount') !== 3) {
+        throw new Error('Not enough players')
+      } else {
+        throw new Error('Is is not your turn')
+      }
+    }
   },
   componentDidMount: function() {
     store.clues.on('gotAllClues', () => {
