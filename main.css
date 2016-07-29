@@ -445,13 +445,16 @@ textarea {
 
 header nav {
   display: flex;
-  justify-content: space-between; }
+  justify-content: flex-end; }
   header nav #logo {
-    padding: 10px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
     height: 50px; }
   header nav ul {
     display: flex;
-    justify-content: flex-end; }
+    justify-content: flex-end;
+    height: 75px; }
     header nav ul li {
       display: flex;
       justify-content: center;
@@ -459,7 +462,7 @@ header nav {
       margin: 10px;
       color: #fff;
       border: 2px solid #fff;
-      border-radius: 5px;
+      border-radius: 3px;
       padding: 10px 20px; }
       header nav ul li:hover {
         cursor: pointer;
