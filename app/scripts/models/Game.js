@@ -10,6 +10,7 @@ const Game = Backbone.Model.extend({
     categories: [],
     gameNumber: 0
   },
+  idAttribute: '_id',
   getGame: function() {
     this.set('categories', [])
     for(let i = 1; i <= 6; i++) {

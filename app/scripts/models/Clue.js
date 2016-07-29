@@ -11,6 +11,7 @@ const Clue = Backbone.Model.extend({
     value: 0,
     answered: false
   },
+  idAttribute: 'id'
 })
 
 export default Clue

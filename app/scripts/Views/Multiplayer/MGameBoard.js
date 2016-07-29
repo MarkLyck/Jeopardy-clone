@@ -1,5 +1,4 @@
 import React from 'react'
-// import $ from 'jquery'
 import _ from 'underscore'
 import Backbone from 'backbone'
 
@@ -17,7 +16,7 @@ import UserSection from './components/UserSection'
 
 const GameBoard = React.createClass({
   getInitialState: function() {
-    return {categories: [], answering: false, question: '', answer: '', isWaiting: true}
+    return {categories: [], answering: false, question: '', answer: '', isWaiting: true, players: []}
   },
   componentDidMount: function() {
     store.multiplayerGame.model.on('change', this.updateGameState)
@@ -25,7 +24,7 @@ const GameBoard = React.createClass({
     store.session.on('change', this.updateUser)
   },
   updateGameState: function() {
-    this.setState({categories: store.multiplayerGame.model.get('categories')})
+    this.setState({categories: store.multiplayerGame.model.get('categories'), players: store.multiplayerGame.model.get('players')})
   },
   updateUser: function() {
     if (store.session.get('money') > store.session.get('highScore')) {
@@ -71,10 +70,14 @@ const GameBoard = React.createClass({
     store.game.model.off('change', this.updateGameState)
   },
   render: function() {
+    if (!this.state.categories[0]) {
+      return null
+    }
     if (this.state.categories[0]) {
       let gameContent = this.state.categories.map((category, i) => {
         return (
-          <Category startQuestion={this.startQuestion} categoryName={this.state.categories[i].title} key={i} clues={category.clueIds}/>
+          // <Category startQuestion={this.startQuestion} categoryName={this.state.categories[i].title} key={i} clues={category.clueIds}/>
+          <Category startQuestion={this.startQuestion} category={this.state.categories[i]} key={i}/>
         )
       })
 
@@ -105,7 +108,7 @@ const GameBoard = React.createClass({
         <div id="game-container">
           <div>{gameContent}</div>
           {questionModal}
-          <UserSection/>
+          <UserSection players={this.state.players}/>
         </div>
       )
     } else {

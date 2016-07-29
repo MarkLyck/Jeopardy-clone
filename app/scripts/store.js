@@ -3,6 +3,7 @@ import Game from './models/Game'
 import MultiplayerGame from './models/MultiplayerGame'
 import Users from './collections/Users'
 import Clues from './collections/Clues'
+import MultiplayerGames from './collections/MultiplayerGames'
 
 let store = {
   session: new Session(),
@@ -12,7 +13,8 @@ let store = {
   },
   multiplayerGame: {
     fetching: false,
-    model: new MultiplayerGame()
+    model: new MultiplayerGame(),
+    collection: new MultiplayerGames()
   },
   clues: new Clues(),
   users: new Users(),

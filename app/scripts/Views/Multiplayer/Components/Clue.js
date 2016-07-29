@@ -4,20 +4,28 @@ import store from '../../../store'
 
 const Clue = React.createClass({
   getInitialState: function() {
-    return {answered: false, clue: store.clues.get(this.props.clue)}
+    return {answered: false}
   },
   clueClicked: function() {
-    this.props.startQuestion(this.state.clue);
+    this.props.startQuestion(store.clues.get(this.props.clue));
     this.setState({clicked: true})
   },
   componentDidMount: function() {
-    this.state.clue.on('change', () => {
-      this.setState({answered: this.state.clue.get('answered')})
+    store.clues.on('gotAllClues', () => {
+      this.setState({answered: store.clues.get(this.props.clue).get('answered')})
+      console.log(store.clues.get(this.props.clue));
+      let thisClue = store.clues.get(this.props.clue)
+      thisClue.on('change', () => {
+        this.setState({answered: store.clues.get(this.props.clue).get('answered')})
+      })
     })
   },
   render: function() {
+    if (!store.clues.get(this.props.clue)) {
+      return null
+    }
     if (!this.state.answered) {
-      return (<li onClick={this.clueClicked} className="clue">${this.state.clue.get('value')}</li>)
+      return (<li onClick={this.clueClicked} className="clue">${store.clues.get(this.props.clue).get('value')}</li>)
     } else if (this.state.answered === 'correct'){
       return (<li className="clue answered"><i className="fa fa-check"/></li>)
     } else if (this.state.answered === 'wrong'){

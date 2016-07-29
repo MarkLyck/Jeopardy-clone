@@ -2,8 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import $ from 'jquery'
 import _ from 'underscore'
-
 import stringSimilarity from 'string-similarity'
+
+import store from '../../../store'
 
 const QuestionModal = React.createClass({
   getInitialState: function() {
@@ -38,11 +39,13 @@ const QuestionModal = React.createClass({
       this.props.sendAnswer(true, answer)
       clearInterval(this.state.interval);
       this.props.clue.set('answered', 'correct')
+      console.log('store clue after correct:', store.clues.get(this.props.clue.get('id')));
     } else {
       console.log('YOU ARE WRONG!');
       this.props.sendAnswer(false, answer)
       clearInterval(this.state.interval);
       this.props.clue.set('answered', 'wrong')
+      console.log('store clue after wrong:', store.clues.get(this.props.clue.get('id')));
     }
   },
   removeModal: function(e) {

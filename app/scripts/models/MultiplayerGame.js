@@ -12,51 +12,58 @@ const Game = Backbone.Model.extend({
     gameNumber: 0,
     players: [],
     playerCount: 1,
-    turn: '',
-    clueIds: []
+    turn: ''
   },
+  idAttribute: '_id',
   getGame: function() {
     $.ajax('https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards?query={"playerCount":{"$lt": 3}}').then((response) => {
       if (response.length === 0) {
         console.log('create new game');
-        this.set('players', [store.session.get('username')])
+        this.set('players', [{username: store.session.get('username'), money: 0}])
         for(let i = 1; i <= 6; i++) {
           this.getCategory(Math.floor(Math.random()*18000))
         }
       } else {
-        let fixedCategories = response[0].categories.map(function(category) {
-          let sortedClues = _.sortBy(category.clues, function(clue) {
-            return clue.value
-          })
-
-          let clueIds = []
-          
-          sortedClues.forEach(function(clue) {
-            store.clues.add({
-              id: clue.id,
-              question: clue.question,
-              answer: clue.answer,
-              value: clue.value,
-              answered: clue.answered,
-              category: clue.category
+        if (store.multiplayerGame.model.get('categories').length === 0) {
+          this.set('_id', response[0]._id)
+          this.fetch({
+            success: () => {
+            this.getGame()
+          }, error: function() {
+            console.log('ERROR FETCHING');
+          }})
+        } else {
+          let fixedCategories = response[0].categories.map(function(category) {
+            let sortedClues = _.sortBy(category.clues, function(clue) {
+              return clue.value
             })
-            clueIds.push(clue.id)
-          })
-          category.clueIds = clueIds
-          return category
-        })
-        this.set('categories', fixedCategories)
-        this.set('gameNumber', response[0].gameNumber)
-        this.set('players', response[0].players)
-        this.set('playerCount', response[0].playerCount)
-        this.set('turn', response[0].turn)
-        this._id = response[0]._id
 
-        let players = this.get('players')
-        players.push(store.session.get('username'))
-        this.set('players', players)
-        this.save()
-        // Saving it to the server will Cause it to break...
+            let clueIds = []
+
+            sortedClues.forEach(function(clue) {
+              store.clues.add({
+                id: clue.id,
+                question: clue.question,
+                answer: clue.answer,
+                value: clue.value,
+                answered: clue.answered,
+                category: clue.category
+              })
+              clueIds.push(clue.id)
+              if (store.clues.length === 30) {
+                store.clues.trigger('gotAllClues')
+              }
+            })
+            category.clueIds = clueIds
+            return category
+          })
+          this.set('categories', fixedCategories)
+
+          let players = this.get('players')
+          players.push({username: store.session.get('username'), money: 0})
+          this.set('players', players)
+          this.save()
+        }
       }
     })
   },

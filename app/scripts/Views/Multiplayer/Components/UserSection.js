@@ -16,13 +16,21 @@ const UserSection = React.createClass({
     store.session.off('change', this.updateMoney)
   },
   render: function() {
+    let players;
+    if (this.props.players[0]) {
+      players = this.props.players.map((player, i) => {
+        return (
+          <li className="user" key={i}>
+            <p>{player.username}</p>
+            <h3>${player.money}</h3>
+          </li>
+        )
+      })
+    }
     return (
-      <div id="user-section">
-        <div className="user">
-          <p>{store.session.get('username')}</p>
-          <h3>${this.state.money}</h3>
-        </div>
-      </div>
+      <ul id="user-section">
+        {players}
+      </ul>
     )
   }
 })
