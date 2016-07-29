@@ -76,7 +76,6 @@ const GameBoard = React.createClass({
     if (this.state.categories[0]) {
       let gameContent = this.state.categories.map((category, i) => {
         return (
-          // <Category startQuestion={this.startQuestion} categoryName={this.state.categories[i].title} key={i} clues={category.clueIds}/>
           <Category startQuestion={this.startQuestion} category={this.state.categories[i]} key={i}/>
         )
       })

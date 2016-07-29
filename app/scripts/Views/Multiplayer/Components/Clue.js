@@ -13,7 +13,6 @@ const Clue = React.createClass({
   componentDidMount: function() {
     store.clues.on('gotAllClues', () => {
       this.setState({answered: store.clues.get(this.props.clue).get('answered')})
-      console.log(store.clues.get(this.props.clue));
       let thisClue = store.clues.get(this.props.clue)
       thisClue.on('change', () => {
         this.setState({answered: store.clues.get(this.props.clue).get('answered')})
@@ -26,12 +25,8 @@ const Clue = React.createClass({
     }
     if (!this.state.answered) {
       return (<li onClick={this.clueClicked} className="clue">${store.clues.get(this.props.clue).get('value')}</li>)
-    } else if (this.state.answered === 'correct'){
-      return (<li className="clue answered"><i className="fa fa-check"/></li>)
-    } else if (this.state.answered === 'wrong'){
-      return (<li className="clue answered"><i className="fa fa-times"/></li>)
-    } else if (this.state.answered === 'passed'){
-      return (<li className="clue answered">...</li>)
+    } else {
+      return (<li className="clue answered"></li>)
     }
   }
 })

@@ -9,17 +9,18 @@ const Game = Backbone.Model.extend({
   urlRoot: `https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards/`,
   defaults: {
     categories: [],
-    gameNumber: 0,
     players: [],
     playerCount: 1,
     turn: ''
   },
   idAttribute: '_id',
   getGame: function() {
+    store.clues.reset()
     $.ajax('https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards?query={"playerCount":{"$lt": 3}}').then((response) => {
       if (response.length === 0) {
         console.log('create new game');
         this.set('players', [{username: store.session.get('username'), money: 0}])
+        this.set('turn', store.session.get('username'))
         for(let i = 1; i <= 6; i++) {
           this.getCategory(Math.floor(Math.random()*18000))
         }
@@ -62,6 +63,9 @@ const Game = Backbone.Model.extend({
           let players = this.get('players')
           players.push({username: store.session.get('username'), money: 0})
           this.set('players', players)
+          let playerCount = this.get('playerCount')
+          playerCount += 1
+          this.set('playerCount', playerCount)
           this.save()
         }
       }
@@ -70,7 +74,8 @@ const Game = Backbone.Model.extend({
   getCategory: function(id) {
     console.log('FETCHING CATEGORY');
     $.ajax(`http://jservice.io/api/category?id=${id}`)
-      .then((category) => {
+      .then((response) => {
+        let category = response
         let filterValue = 200
         let usefulClues = category.clues.filter((clue) => {
           if (clue.value === filterValue) {
@@ -79,7 +84,6 @@ const Game = Backbone.Model.extend({
           }
         })
         let clueIds = []
-        store.clues.reset()
         usefulClues.forEach((clue) => {
           store.clues.add({
             id: clue.id,
@@ -92,8 +96,9 @@ const Game = Backbone.Model.extend({
           clueIds.push(clue.id)
         })
 
-        category.clues = store.clues.models
+        category.clues = usefulClues
         category.clueIds = clueIds
+        console.log('CATEGORY CLUES AFTER FIX: ', category.clues);
 
         if (usefulClues.length === 5) {
           let newCategories = this.get('categories')
@@ -101,10 +106,19 @@ const Game = Backbone.Model.extend({
           this.set('categories', newCategories)
           this.trigger('change')
         } else {
+          console.log('FAILED: ', clueIds);
+          clueIds.forEach((clueId) => {
+            store.clues.remove(clueId)
+          })
+          console.log(' store clues after faiL: ', store.clues);
           this.getCategory(Math.floor(Math.random()*18000))
         }
         if (this.get('categories').length === 6) {
+          console.log('FETCHED ALL CATEGORIES');
           this.save()
+          if (store.clues.length === 30) {
+            store.clues.trigger('gotAllClues')
+          }
         }
       })
   }
