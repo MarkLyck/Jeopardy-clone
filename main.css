@@ -398,7 +398,7 @@ textarea {
   font-family: pokemonTitle;
   src: url("assets/fonts/PokemonSolid.ttf"); }
 #game-container {
-  margin-top: 20px;
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: center; }
@@ -410,7 +410,8 @@ textarea {
   display: flex;
   flex-direction: column;
   margin: 0 20px;
-  width: calc(100%/6); }
+  width: calc(100%/6);
+  text-align: center; }
   .category-container .category-name {
     margin: 0;
     display: flex;
@@ -423,7 +424,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10vh;
+    height: calc(100vh / 4.5 - 100px);
     width: 100%;
     margin: 20px 0;
     border: 2px solid #fff;
@@ -454,7 +455,8 @@ header nav {
   header nav ul {
     display: flex;
     justify-content: flex-end;
-    height: 75px; }
+    height: 75px;
+    padding: 10px; }
     header nav ul li {
       display: flex;
       justify-content: center;
@@ -566,9 +568,17 @@ header nav {
 #user-section {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 5px;
+  height: 100px;
   color: #fff;
   font-size: 3rem; }
+  #user-section .user {
+    text-align: center; }
+    #user-section .user p {
+      margin: 0;
+      font-size: 1rem; }
+    #user-section .user h3 {
+      margin: 0; }
 
 #highscore-tabs {
   display: flex;
