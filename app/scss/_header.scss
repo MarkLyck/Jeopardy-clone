@@ -1,14 +1,18 @@
 header {
   nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     #logo {
-      padding: 10px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      // padding: 10px;
       height: 50px;
     }
     ul {
       display: flex;
       justify-content: flex-end;
+      height: 75px;
       li {
         display: flex;
         justify-content: center;
@@ -16,7 +20,7 @@ header {
         margin: 10px;
         color: #fff;
         border: 2px solid #fff;
-        border-radius: 5px;
+        border-radius: 3px;
         padding: 10px 20px;
         &:hover {
           cursor: pointer;
