@@ -20,7 +20,20 @@ const QuestionModal = React.createClass({
     answer = answer.replace('.', '')
     answer = answer.trim()
 
-    if (stringSimilarity.compareTwoStrings(answer, this.props.clue.get('answer').toLowerCase()) >= 0.75) {
+    let correctAnswer = this.props.clue.get('answer')
+    correctAnswer = correctAnswer.toLowerCase()
+    correctAnswer = correctAnswer.replace('(', '')
+    correctAnswer = correctAnswer.replace(')', '')
+    correctAnswer = correctAnswer.replace('.', '')
+    correctAnswer = correctAnswer.replace(',', '')
+    correctAnswer = correctAnswer.replace('<i>', '')
+    correctAnswer = correctAnswer.replace('</i>', '')
+    correctAnswer = correctAnswer.replace(/\\/g, '');
+    correctAnswer = correctAnswer.trim();
+
+    console.log('CHECKING: ' + answer + ' AGAINST: ', correctAnswer);
+
+    if (stringSimilarity.compareTwoStrings(answer, correctAnswer) >= 0.75) {
       console.log('YOU ARE CORRECT!');
       this.props.sendAnswer(true, answer)
       clearInterval(this.state.interval);

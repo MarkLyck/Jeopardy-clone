@@ -42,6 +42,7 @@ const GameBoard = React.createClass({
     correctAnswer = correctAnswer.replace('<i>', '')
     correctAnswer = correctAnswer.replace('</i>', '')
     correctAnswer = correctAnswer.replace(/\\/g, '');
+    correctAnswer = correctAnswer.trim();
 
     this.setState({
       clue: clue,
@@ -72,10 +73,6 @@ const GameBoard = React.createClass({
   render: function() {
     if (this.state.categories[0]) {
       let gameContent = this.state.categories.map((category, i) => {
-        // let clues = store.clues
-        // clues = _.sortBy(clues.models, function(clue) {
-        //   return clue.get('value')
-        // })
         return (
           <Category startQuestion={this.startQuestion} categoryName={this.state.categories[i].title} key={i} clues={category.clueIds}/>
         )
