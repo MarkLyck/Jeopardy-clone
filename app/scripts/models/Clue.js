@@ -3,8 +3,6 @@ import Backbone from 'backbone';
 
 import store from '../store'
 
-console.log(store);
-
 const Clue = Backbone.Model.extend({
   urlRoot: `https://baas.kinvey.com/appdata/kid_BJXvpPIu/clues/`,
   defaults: {
