@@ -4,6 +4,10 @@ import Clue from './Clue'
 
 const Category = React.createClass({
   render: function() {
+    // This doesn't work for some reason...
+    // let cluesList = this.props.category.clues.map((category, i) => {
+    //   <Clue startQuestion={this.props.startQuestion} clue={this.props.category.clueIds[i]} categoryName={this.props.category.title} key={i}/>
+    // })
     let cluesList = (
       <ul className="clues-list">
         <Clue startQuestion={this.props.startQuestion} clue={this.props.category.clueIds[0]} categoryName={this.props.category.title} key="1"/>
@@ -16,7 +20,9 @@ const Category = React.createClass({
     return (
       <div className="category-container">
         <h3 className="category-name">{this.props.category.title}</h3>
-        {cluesList}
+        <ul className='clues-list'>
+          {cluesList}
+        </ul>
       </div>
     )
   }

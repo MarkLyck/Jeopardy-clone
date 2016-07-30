@@ -69,6 +69,9 @@ const QuestionModal = React.createClass({
     }, 1000);
     this.setState({interval: countdownTimer})
   },
+  componentWillUnmount: function() {
+    clearInterval(this.state.interval);
+  },
   speakAnswer: function() {
     this.setState({music:false, listening: true})
     this.thinkingMusic.pause();

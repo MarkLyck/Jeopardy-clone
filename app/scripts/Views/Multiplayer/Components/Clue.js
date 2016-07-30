@@ -7,7 +7,8 @@ const Clue = React.createClass({
     return {answered: false}
   },
   clueClicked: function() {
-    if (store.multiplayerGame.model.get('playerCount') === 3 && store.multiplayerGame.model.get('turn') === store.session.get('username')) {
+    // CHANGE THIS BACK TO is === 3
+    if (store.multiplayerGame.model.get('playerCount') <= 3 && store.multiplayerGame.model.get('turn') === store.session.get('username')) {
       this.props.startQuestion(store.clues.get(this.props.clue));
       this.setState({clicked: true})
     } else {

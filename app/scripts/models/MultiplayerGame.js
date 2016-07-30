@@ -24,8 +24,14 @@ const Game = Backbone.Model.extend({
   startFetching: function() {
     let fetchingInterval = window.setInterval(() => {
       this.fetch({
-        success: function(response) {
-          console.log('UPDATED GAME');
+        success: (response) => {
+          console.log('FETCHING');
+          console.log('this: ', this);
+          console.log('before: ',  store.clues.get(this.get('clueId')));
+          let chosenClue = store.clues.get(this.get('clueId'))
+          chosenClue.set('answered', true)
+          console.log('after: ', store.clues.get(this.get('clueId')));
+          this.trigger('updateGame')
         }
       })
     }, 2000);
@@ -34,7 +40,6 @@ const Game = Backbone.Model.extend({
     store.clues.reset()
     $.ajax('https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards?query={"playerCount":{"$lt": 3}}').then((response) => {
       if (response.length === 0) {
-        console.log('create new game');
         this.set('players', [{username: store.session.get('username'), money: 0}])
         this.set('turn', store.session.get('username'))
         for(let i = 1; i <= 6; i++) {
@@ -86,7 +91,6 @@ const Game = Backbone.Model.extend({
           })
           if (!playerAlreadyInGame) {
             players.push({username: store.session.get('username'), money: 0})
-            console.log('PLAYERS: ', players);
             this.set('players', players)
 
             let playerCount = this.get('playerCount')
@@ -94,13 +98,13 @@ const Game = Backbone.Model.extend({
             this.set('playerCount', playerCount)
             this.save()
           }
+          this.trigger('updateGame')
           this.startFetching()
         }
       }
     })
   },
   getCategory: function(id) {
-    console.log('FETCHING CATEGORY');
     $.ajax(`http://jservice.io/api/category?id=${id}`)
       .then((response) => {
         let category = response
@@ -126,23 +130,19 @@ const Game = Backbone.Model.extend({
 
         category.clues = usefulClues
         category.clueIds = clueIds
-        console.log('CATEGORY CLUES AFTER FIX: ', category.clues);
 
         if (usefulClues.length === 5) {
           let newCategories = this.get('categories')
           newCategories.push(category)
           this.set('categories', newCategories)
-          this.trigger('change')
+          this.trigger('updateGame')
         } else {
-          console.log('FAILED: ', clueIds);
           clueIds.forEach((clueId) => {
             store.clues.remove(clueId)
           })
-          console.log(' store clues after faiL: ', store.clues);
           this.getCategory(Math.floor(Math.random()*18000))
         }
         if (this.get('categories').length === 6) {
-          console.log('FETCHED ALL CATEGORIES');
           this.save()
           this.startFetching()
           if (store.clues.length === 30) {

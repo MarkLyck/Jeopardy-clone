@@ -64,6 +64,7 @@ const GameBoard = React.createClass({
     }
   },
   componentWillUnmount: function() {
+    console.log('UNMOUNTING GAMEBOARD');
     store.session.off('change', this.updateUser)
     store.game.model.off('change', this.updateGameState)
   },
