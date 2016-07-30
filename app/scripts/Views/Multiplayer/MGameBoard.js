@@ -70,6 +70,10 @@ const MGameBoard = React.createClass({
       store.session.set('money', newMoney)
       this.setState({answering: 'correct'})
 
+      // let answeredClue = store.multiplayerGame.model
+      console.log('model clues: ', store.multiplayerGame.model.get('clues'));
+      // console.log('store clues: ', store.clues);
+
       store.multiplayerGame.model.set('answered', true)
       store.multiplayerGame.model.set('answering', false)
       store.multiplayerGame.model.save()
@@ -82,7 +86,6 @@ const MGameBoard = React.createClass({
     store.multiplayerGame.model.off('change', this.updateGameState)
   },
   render: function() {
-    // console.log('gamestate: ', this.state.game);
     if (!this.state.game.categories) {
       return null
     }

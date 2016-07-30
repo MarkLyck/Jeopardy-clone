@@ -8,10 +8,11 @@ import store from '../../../store'
 
 const QuestionModal = React.createClass({
   getInitialState: function() {
-    return {timeLeft: 30, music:true, listening: false}
+    return {timeLeft: 30, music:true, listening: false, stop: false}
   },
   thinkingMusic: new Audio('assets/sounds/thinking_music.mp3'),
   checkAnswer: function() {
+    this.setState({stop: true})
     this.thinkingMusic.pause();
     this.thinkingMusic.currentTime = 0;
     let answer = this.refs.questionInput.value.toLowerCase()
@@ -39,18 +40,19 @@ const QuestionModal = React.createClass({
       this.props.sendAnswer(true, answer)
       clearInterval(this.state.interval);
       this.props.clue.set('answered', 'correct')
-      console.log('store clue after correct:', store.clues.get(this.props.clue.get('id')));
+      // console.log('store clue after correct:', store.clues.get(this.props.clue.get('id')));
     } else {
       console.log('YOU ARE WRONG!');
       this.props.sendAnswer(false, answer)
       clearInterval(this.state.interval);
       this.props.clue.set('answered', 'wrong')
-      console.log('store clue after wrong:', store.clues.get(this.props.clue.get('id')));
+      // console.log('store clue after wrong:', store.clues.get(this.props.clue.get('id')));
     }
   },
   removeModal: function(e) {
     let targetClassList = _.toArray(e.target.classList)
     if (targetClassList.indexOf('modal-container') !== -1 || targetClassList.indexOf('pass-btn') !== -1 ||  targetClassList.indexOf('pass-span') !== -1) {
+      this.setState({stop: true})
       this.thinkingMusic.pause();
       this.thinkingMusic.currentTime = 0;
       this.props.sendAnswer(false)
@@ -119,6 +121,9 @@ const QuestionModal = React.createClass({
 
   },
   render: function() {
+    if (this.state.stop) {
+      return null
+    }
     if (this.state.music) {
       this.thinkingMusic.play();
     }

@@ -9,6 +9,7 @@ const Game = Backbone.Model.extend({
   urlRoot: `https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards/`,
   defaults: {
     categories: [],
+    clues: [],
     players: [],
     playerCount: 1,
     turn: '',
@@ -25,12 +26,11 @@ const Game = Backbone.Model.extend({
     let fetchingInterval = window.setInterval(() => {
       this.fetch({
         success: (response) => {
-          console.log('FETCHING');
           console.log('this: ', this);
-          console.log('before: ',  store.clues.get(this.get('clueId')));
-          let chosenClue = store.clues.get(this.get('clueId'))
-          chosenClue.set('answered', true)
-          console.log('after: ', store.clues.get(this.get('clueId')));
+          if (store.clues.get(this.get('clueId'))) {
+            let chosenClue = store.clues.get(this.get('clueId'))
+            chosenClue.set('answered', true)
+          }
           this.trigger('updateGame')
         }
       })
@@ -55,28 +55,33 @@ const Game = Backbone.Model.extend({
             console.log('ERROR FETCHING');
           }})
         } else {
-          let fixedCategories = response[0].categories.map(function(category) {
-            let sortedClues = _.sortBy(category.clues, function(clue) {
+          let fixedCategories = response[0].categories.map((category) => {
+            let sortedClues = _.sortBy(category.clues, (clue) => {
               return clue.value
             })
 
             let clueIds = []
+            let cluesArr = this.get('clues')
 
             sortedClues.forEach(function(clue) {
+              // console.log('CLUE FOREACH: ', clue);
               store.clues.add({
                 id: clue.id,
                 question: clue.question,
                 answer: clue.answer,
                 value: clue.value,
                 answered: clue.answered,
-                category: clue.category
+                category: clue.category_id
               })
               clueIds.push(clue.id)
+              cluesArr.push(store.clues.get(clue.id))
               if (store.clues.length === 30) {
                 store.clues.trigger('gotAllClues')
               }
             })
             category.clueIds = clueIds
+            this.set('clues', cluesArr)
+
             return category
           })
           this.set('categories', fixedCategories)
@@ -116,6 +121,7 @@ const Game = Backbone.Model.extend({
           }
         })
         let clueIds = []
+        let cluesArr = this.get('clues')
         usefulClues.forEach((clue) => {
           store.clues.add({
             id: clue.id,
@@ -126,7 +132,9 @@ const Game = Backbone.Model.extend({
             category: clue.category
           })
           clueIds.push(clue.id)
+          cluesArr.push(store.clues.get(clue.id))
         })
+        this.set('clues', cluesArr)
 
         category.clues = usefulClues
         category.clueIds = clueIds
