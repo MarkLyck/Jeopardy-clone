@@ -139,7 +139,8 @@ const QuestionModal = React.createClass({
       )
     }
 
-    console.log('ANSWER: ', this.props.clue.get('answer'));
+    console.log('THIS.PROPS: ', this.props);
+    // console.log('ANSWER: ', this.props.clue.get('answer'));
     return (
       <div onClick={this.removeModal} className="modal-container">
         <div className="modal">

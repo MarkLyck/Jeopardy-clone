@@ -26,8 +26,23 @@ const Game = Backbone.Model.extend({
     let fetchingInterval = window.setInterval(() => {
       this.fetch({
         success: (response) => {
-          console.log('this: ', this);
+          console.log('Fetching');
           if (store.clues.get(this.get('clueId'))) {
+            console.log('STORE HAS THIS CLUE IN IT!');
+
+            let updatedClues = this.get('clues').map((filterClue) => {
+              if (filterClue.id === this.get('clueId')) {
+                store.clues.remove(this.get('clueId'))
+                store.clues.add(filterClue)
+                store.clues.trigger('gotAllClues')
+                console.log('STORE CLUES AFTER UPDATE: ', store.clues, this.get('clueId'));
+                filterClue.answered = true
+                return filterClue
+              } else {
+                return filterClue
+              }
+            })
+            this.set('clues', updatedClues)
             let chosenClue = store.clues.get(this.get('clueId'))
             chosenClue.set('answered', true)
           }

@@ -28,6 +28,9 @@ const Clue = React.createClass({
       })
     })
   },
+  componentWillUnmount: function() {
+    store.clues.off()
+  },
   render: function() {
     if (!store.clues.get(this.props.clue)) {
       return null

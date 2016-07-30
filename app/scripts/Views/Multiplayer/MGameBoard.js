@@ -25,7 +25,11 @@ const MGameBoard = React.createClass({
     store.session.on('change', this.updateUser)
   },
   updateGameState: function() {
-    this.setState({game: store.multiplayerGame.model.toJSON()})
+    let clue = store.clues.get(store.multiplayerGame.model.get('clueId'))
+    this.setState({
+      game: store.multiplayerGame.model.toJSON(),
+      clue: clue
+    })
   },
   updateUser: function() {
     if (store.session.get('money') > store.session.get('highScore')) {
@@ -83,7 +87,7 @@ const MGameBoard = React.createClass({
   },
   componentWillUnmount: function() {
     store.session.off('change', this.updateUser)
-    store.multiplayerGame.model.off('change', this.updateGameState)
+    store.multiplayerGame.model.off()
   },
   render: function() {
     if (!this.state.game.categories) {
