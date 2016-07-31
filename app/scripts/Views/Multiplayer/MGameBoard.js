@@ -61,7 +61,6 @@ const MGameBoard = React.createClass({
     store.multiplayerGame.model.set('answer', correctAnswer)
     store.multiplayerGame.model.set('answered', false)
     store.multiplayerGame.model.set('answering', true)
-    console.log(store.multiplayerGame.model.get('categories'));
     store.multiplayerGame.model.save()
   },
   removeModal: function() {

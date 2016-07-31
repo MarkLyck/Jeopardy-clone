@@ -2,6 +2,8 @@ import React from 'react'
 
 import store from '../../../store'
 
+import User from './User'
+
 const UserSection = React.createClass({
   getInitialState: function() {
     return {players: []}
@@ -17,21 +19,7 @@ const UserSection = React.createClass({
   },
   render: function() {
     let players = this.state.players.map((player, i) => {
-      if (player.username !== store.session.get('username')) {
-        return (
-          <li className="user" key={i}>
-            <p>{player.username}</p>
-            <h3>${player.money}</h3>
-          </li>
-        )
-      } else {
-        return (
-          <li className="user" key={i}>
-            <p className="my-player">{player.username}</p>
-            <h3>${player.money}</h3>
-          </li>
-        )
-      }
+      return <User player={player} key={i}/>
     })
     return (
       <ul id="user-section">

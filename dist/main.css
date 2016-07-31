@@ -582,6 +582,8 @@ header nav {
       font-weight: bold; }
     #user-section .user h3 {
       margin: 0; }
+  #user-section .player-turn h3 {
+    text-decoration: underline; }
 
 #highscore-tabs {
   display: flex;
