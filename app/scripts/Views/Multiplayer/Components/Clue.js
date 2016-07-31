@@ -12,7 +12,7 @@ const Clue = React.createClass({
       this.props.startQuestion(store.clues.get(this.props.clue));
       this.setState({clicked: true})
     } else {
-      if (store.multiplayerGame.model.get('playerCount') !== 3) {
+      if (store.multiplayerGame.model.get('playerCount') >= 3) {
         throw new Error('Not enough players')
       } else {
         throw new Error('Is is not your turn')

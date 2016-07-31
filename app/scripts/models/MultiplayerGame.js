@@ -20,7 +20,15 @@ const Game = Backbone.Model.extend({
   },
   idAttribute: '_id',
   nextTurn: function() {
-
+    let playersArr = this.get('players')
+    let playerIndex = _.findIndex(playersArr, (playerItem) => { return playerItem.username === this.get('turn') })
+    let nextPlayerIndex = 0
+    if (playerIndex < 2) {
+      nextPlayerIndex = (playerIndex + 1)
+    }
+    this.set('turn', playersArr[nextPlayerIndex].username)
+    this.save()
+    this.trigger('updateGame')
   },
   startFetching: function() {
     let fetchingInterval = window.setInterval(() => {

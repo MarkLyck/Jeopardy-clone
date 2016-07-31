@@ -81,11 +81,11 @@ const MGameBoard = React.createClass({
       let playerIndex = _.findIndex(playersArr, function(playerItem) { return playerItem.username == store.session.get('username') })
       let myPlayer = playersArr[playerIndex]
 
-      myPlayer.money += this.state.clueValue
+      let currClue = store.clues.get(store.multiplayerGame.model.get('clueId'))
+      myPlayer.money += currClue.get('value')
       playersArr.splice(playerIndex, 1, myPlayer)
       store.multiplayerGame.model.set('players', playersArr)
-
-      store.multiplayerGame.model.save()
+      store.multiplayerGame.model.nextTurn()
     } else {
       this.setState({answering: 'wrong', userAnswer: answer})
     }
