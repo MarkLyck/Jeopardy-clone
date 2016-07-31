@@ -71,6 +71,7 @@
       input {
         outline: none;
         padding: 20px;
+        margin: 0;
         width: 80%;
         border: none;
         background: darken(#fff, 5%);
@@ -78,6 +79,7 @@
       .submit-answer-btn {
         width: 20%;
         padding: 20px;
+        margin: 0;
         border: none;
         background-color: $primary-color;
         color: #fff;

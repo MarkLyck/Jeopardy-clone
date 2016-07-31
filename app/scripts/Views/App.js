@@ -59,6 +59,9 @@ const App = React.createClass({
       store.multiplayerGame.model.getGame()
     }
   },
+  gotoSinglePlayer: function() {
+    hashHistory.push('/play')
+  },
   componentDidMount: function() {
     store.session.on('change', this.stopModal)
   },
@@ -123,7 +126,7 @@ const App = React.createClass({
       <div>
         <header>
           <nav>
-            <img id="logo" src="assets/images/logo.png"/>
+            <img id="logo" src="assets/images/logo.png" onClick={this.gotoSinglePlayer}/>
             {navButtons}
           </nav>
         </header>

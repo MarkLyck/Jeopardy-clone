@@ -42,14 +42,20 @@ const QuestionModal = React.createClass({
   },
   componentDidMount: function() {
     let countdownTimer = setInterval(() => {
+      console.log('TIME LOOP');
       if (this.state.timeLeft !== 0) {
         this.setState({timeLeft: this.state.timeLeft -1})
       } else {
         clearInterval(countdownTimer);
+        this.props.clue.set('answered', 'wrong')
         this.props.sendAnswer(false)
       }
     }, 1000);
     this.setState({interval: countdownTimer})
+  },
+  componentWillUnmount: function() {
+    console.log('QUESTION MODAL UNMOUNTING');
+    clearInterval(this.state.countdownTimer);
   },
   speakAnswer: function() {
     this.setState({music:false, listening: true})
