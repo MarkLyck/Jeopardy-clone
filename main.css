@@ -496,6 +496,22 @@ header nav {
     flex-direction: column;
     align-items: center;
     position: relative; }
+    .modal-container .modal input {
+      width: 80%;
+      padding: 20px;
+      box-sizing: border-box;
+      margin: 10px; }
+    .modal-container .modal button {
+      width: 80%;
+      padding: 20px;
+      background-color: #00C69F;
+      border: none;
+      color: #fff;
+      box-sizing: border-box;
+      margin: 10px; }
+      .modal-container .modal button:hover {
+        background-color: #00ad8b;
+        cursor: pointer; }
     .modal-container .modal #time-left {
       position: absolute;
       left: 50%;
