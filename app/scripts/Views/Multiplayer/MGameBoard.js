@@ -128,7 +128,7 @@ const MGameBoard = React.createClass({
         <Modal removeModal={this.removeModal}>
           <i className="fa fa-times"/>
           <h2>Wrong!</h2>
-          <h3>The correct answer was: <span className="correct-answer">{this.state.answer}</span></h3>
+          <h3>The correct answer was: <span className="correct-answer">{store.multiplayerGame.model.get('answer')}</span></h3>
           <h3>Your answer was: <span className="correct-answer">{this.state.userAnswer}</span></h3>
         </Modal>
       )

@@ -78,8 +78,6 @@ const QuestionModal = React.createClass({
   },
   componentWillUnmount: function() {
     clearInterval(this.state.interval);
-    console.log('UNMOUNTING COMPONENT IS RUNNING');
-    console.log('state.answered: ', this.answered);
     if (!this.answered) {
       this.props.clue.set('answered', 'wrong')
       this.props.sendAnswer(false)

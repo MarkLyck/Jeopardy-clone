@@ -13,9 +13,11 @@ const Game = Backbone.Model.extend({
     players: [],
     playerCount: 1,
     turn: '',
+    answer: '',
     answered: false,
     answering: false,
-    clueId: 0
+    clueId: 0,
+    madeTurn: false
   },
   idAttribute: '_id',
   nextTurn: function() {
@@ -28,6 +30,7 @@ const Game = Backbone.Model.extend({
     this.set('turn', playersArr[nextPlayerIndex].username)
     this.set('answering', false)
     this.set('answered', false)
+    this.set('madeTurn', false)
     this.save()
     this.trigger('updateGame')
   },
