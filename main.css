@@ -452,6 +452,8 @@ header nav {
     top: 20px;
     left: 20px;
     height: 50px; }
+    header nav #logo:hover {
+      cursor: pointer; }
   header nav ul {
     display: flex;
     justify-content: flex-end;
@@ -540,12 +542,14 @@ header nav {
       .modal-container .modal .wrapper input {
         outline: none;
         padding: 20px;
+        margin: 0;
         width: 80%;
         border: none;
         background: #f2f2f2; }
       .modal-container .modal .wrapper .submit-answer-btn {
         width: 20%;
         padding: 20px;
+        margin: 0;
         border: none;
         background-color: #00C69F;
         color: #fff; }
