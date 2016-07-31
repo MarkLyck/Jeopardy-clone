@@ -26,8 +26,53 @@ const Game = Backbone.Model.extend({
       nextPlayerIndex = (playerIndex + 1)
     }
     this.set('turn', playersArr[nextPlayerIndex].username)
+    this.set('answering', false)
+    this.set('answered', false)
     this.save()
     this.trigger('updateGame')
+  },
+  answerWrong: function() {
+    let playersArr = this.get('players')
+    let playerIndex = _.findIndex(playersArr, (playerItem) => {
+      return playerItem.username === store.session.get('username')
+    })
+    playersArr[playerIndex].answered = 'wrong'
+    this.set('players', playersArr)
+    this.save()
+  },
+  timesUp: function() {
+    let playersArr = this.get('players')
+    let playerIndex = _.findIndex(playersArr, (playerItem) => {
+      return playerItem.username === store.session.get('username')
+    })
+    playersArr = playersArr.map(player => {
+      player.answered = 'wrong'
+      return player
+    })
+    this.set('players', playersArr)
+    this.save()
+  },
+  testAnswers: function() {
+    let playersArr = this.get('players')
+    let wrongAnswers = 0
+    playersArr.forEach(player => {
+      if (player.answered === 'wrong') {
+        wrongAnswers++
+      }
+    })
+    if (wrongAnswers >= 3) {
+      this.resetAnswers()
+    }
+  },
+  resetAnswers: function() {
+    console.log('RESETTING ANSWERS');
+    let playersArr = this.get('players')
+    playersArr = playersArr.map(player => {
+      player.answered = false
+      return player
+    })
+    this.set('players', playersArr)
+    this.nextTurn()
   },
   startFetching: function() {
     let fetchingInterval = window.setInterval(() => {
@@ -54,6 +99,7 @@ const Game = Backbone.Model.extend({
             this.trigger('updateGame')
             sessionStorage.lastUpdate = JSON.stringify(this.toJSON())
           }
+          this.testAnswers()
         }
       })
     }, 2000);
@@ -62,7 +108,7 @@ const Game = Backbone.Model.extend({
     store.clues.reset()
     $.ajax('https://baas.kinvey.com/appdata/kid_BJXvpPIu/gameboards?query={"playerCount":{"$lt": 3}}').then((response) => {
       if (response.length === 0) {
-        this.set('players', [{username: store.session.get('username'), money: 0}])
+        this.set('players', [{username: store.session.get('username'), money: 0, answered: false}])
         this.set('turn', store.session.get('username'))
         this.trigger('updateGame')
         for(let i = 1; i <= 6; i++) {
@@ -74,8 +120,9 @@ const Game = Backbone.Model.extend({
           this.fetch({
             success: () => {
             this.getGame()
-          }, error: function() {
-            console.log('ERROR FETCHING');
+          }, error: () => {
+            console.log('ERROR FETCHING GAME');
+            this.getGame()
           }})
         } else {
           let fixedCategories = response[0].categories.map((category) => {
@@ -87,7 +134,6 @@ const Game = Backbone.Model.extend({
             let cluesArr = this.get('clues')
 
             sortedClues.forEach(function(clue) {
-              // console.log('CLUE FOREACH: ', clue);
               store.clues.add({
                 id: clue.id,
                 question: clue.question,
@@ -118,7 +164,7 @@ const Game = Backbone.Model.extend({
             }
           })
           if (!playerAlreadyInGame) {
-            players.push({username: store.session.get('username'), money: 0})
+            players.push({username: store.session.get('username'), money: 0, answered: false})
             this.set('players', players)
 
             let playerCount = this.get('playerCount')

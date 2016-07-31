@@ -558,15 +558,13 @@ header nav {
           background-color: #00ad8b; }
     .modal-container .modal .pass-btn {
       background: none;
-      border: none; }
+      border: none;
+      color: #555; }
       .modal-container .modal .pass-btn .pass-span {
         color: #df1e58; }
-        .modal-container .modal .pass-btn .pass-span:hover {
-          cursor: pointer;
-          color: #c91b4f;
-          background: none; }
       .modal-container .modal .pass-btn:hover {
         cursor: pointer;
+        background: none;
         color: #c91b4f; }
     .modal-container .modal .mic-button {
       margin: 20px;

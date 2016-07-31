@@ -6,19 +6,25 @@ const Clue = React.createClass({
   getInitialState: function() {
     return {answered: false}
   },
+  clueAlreadyClicked: false,
   clueClicked: function() {
-    if (store.multiplayerGame.model.get('playerCount') === 3 && store.multiplayerGame.model.get('turn') === store.session.get('username')) {
-      this.props.startQuestion(store.clues.get(this.props.clue));
-      this.setState({clicked: true})
-    } else {
-      if (store.multiplayerGame.model.get('playerCount') !== 3) {
-        throw new Error('Not enough players')
+    if (!this.clueAlreadyClicked) {
+      if (store.multiplayerGame.model.get('playerCount') === 3 && store.multiplayerGame.model.get('turn') === store.session.get('username')) {
+        console.log('VALID QUESTION CLICK');
+        this.props.startQuestion(store.clues.get(this.props.clue));
+        // this.setState({clicked: true})
       } else {
-        throw new Error('It is not your turn')
+        if (store.multiplayerGame.model.get('playerCount') !== 3) {
+          throw new Error('Not enough players')
+        } else {
+          throw new Error('It is not your turn')
+        }
       }
     }
+    this.clueAlreadyClicked = true
   },
   componentDidMount: function() {
+    this.clueAlreadyClicked = false
     store.clues.on('gotAllClues', () => {
       this.setState({answered: store.clues.get(this.props.clue).get('answered')})
       let thisClue = store.clues.get(this.props.clue)

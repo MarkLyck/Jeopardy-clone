@@ -27,6 +27,7 @@ const MGameBoard = React.createClass({
   },
   updateGameState: function() {
     let clue = store.clues.get(store.multiplayerGame.model.get('clueId'))
+    console.log('UPDATING GAME: ', store.multiplayerGame.model.toJSON());
     this.setState({
       game: store.multiplayerGame.model.toJSON(),
       clue: clue
@@ -39,6 +40,7 @@ const MGameBoard = React.createClass({
     }
   },
   startQuestion: function(clue) {
+    console.log('STARTING QUESTION WITH CLUE: ', clue);
     let correctAnswer = clue.get('answer')
     correctAnswer = correctAnswer.replace('(', '')
     correctAnswer = correctAnswer.replace(')', '')
@@ -63,6 +65,7 @@ const MGameBoard = React.createClass({
     store.multiplayerGame.model.set('answered', false)
     store.multiplayerGame.model.set('answering', true)
     store.multiplayerGame.model.save()
+    store.multiplayerGame.model.trigger('updateGame')
   },
   removeModal: function() {
     this.setState({answering: false})
@@ -87,12 +90,10 @@ const MGameBoard = React.createClass({
       store.multiplayerGame.model.set('players', playersArr)
       store.multiplayerGame.model.nextTurn()
     } else {
-      // store.multiplayerGame.model.set('answering', false)
-      // store.multiplayerGame.save()
+      console.log('GOT WRONG ANSWER');
       this.setState({answering: 'wrong', userAnswer: answer})
+      store.multiplayerGame.model.answerWrong()
     }
-    // store.multiplayerGame.model.set('answered', true)
-
   },
   componentWillUnmount: function() {
     store.session.off('change', this.updateUser)

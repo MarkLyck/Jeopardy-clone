@@ -8,10 +8,13 @@ import store from '../../../store'
 
 const QuestionModal = React.createClass({
   getInitialState: function() {
-    return {timeLeft: 30, music:true, listening: false, stop: false}
+    return {timeLeft: 30, music:true, listening: false, stop: false, answered: false}
   },
   thinkingMusic: new Audio('assets/sounds/thinking_music.mp3'),
+  answered: false,
   checkAnswer: function() {
+    console.log('CHECK ANSWER IS RUNNING');
+    this.answered = true;
     this.setState({stop: true})
     this.thinkingMusic.pause();
     this.thinkingMusic.currentTime = 0;
@@ -33,26 +36,25 @@ const QuestionModal = React.createClass({
     correctAnswer = correctAnswer.replace(/\\/g, '');
     correctAnswer = correctAnswer.trim();
 
-    console.log('CHECKING: ' + answer + ' AGAINST: ', correctAnswer);
+    // console.log('CHECKING: ' + answer + ' AGAINST: ', correctAnswer);
 
     if (stringSimilarity.compareTwoStrings(answer, correctAnswer) >= 0.75) {
       console.log('YOU ARE CORRECT!');
       this.props.sendAnswer(true, answer)
       clearInterval(this.state.interval);
       this.props.clue.set('answered', 'correct')
-      // console.log('store clue after correct:', store.clues.get(this.props.clue.get('id')));
     } else {
       console.log('YOU ARE WRONG!');
       this.props.sendAnswer(false, answer)
       clearInterval(this.state.interval);
       this.props.clue.set('answered', 'wrong')
-      // console.log('store clue after wrong:', store.clues.get(this.props.clue.get('id')));
     }
   },
   removeModal: function(e) {
     let targetClassList = _.toArray(e.target.classList)
     if (targetClassList.indexOf('modal-container') !== -1 || targetClassList.indexOf('pass-btn') !== -1 ||  targetClassList.indexOf('pass-span') !== -1) {
       this.setState({stop: true})
+      this.answered = true;
       this.thinkingMusic.pause();
       this.thinkingMusic.currentTime = 0;
       this.props.sendAnswer(false)
@@ -61,22 +63,27 @@ const QuestionModal = React.createClass({
     }
   },
   componentDidMount: function() {
+    this.answered = false;
     let countdownTimer = setInterval(() => {
       if (this.state.timeLeft !== 0) {
         this.setState({timeLeft: this.state.timeLeft -1})
       } else {
         clearInterval(countdownTimer)
-        this.props.clue.set('answered', 'wrong')
         store.multiplayerGame.model.set('answering', false)
-        store.multiplayerGame.model.save()
         store.multiplayerGame.model.trigger('updateGame')
-        this.props.sendAnswer(false)
+        store.multiplayerGame.model.timesUp()
       }
     }, 1000);
     this.setState({interval: countdownTimer})
   },
   componentWillUnmount: function() {
     clearInterval(this.state.interval);
+    console.log('UNMOUNTING COMPONENT IS RUNNING');
+    console.log('state.answered: ', this.answered);
+    if (!this.answered) {
+      this.props.clue.set('answered', 'wrong')
+      this.props.sendAnswer(false)
+    }
     this.thinkingMusic.pause()
     this.thinkingMusic.currentTime = 0;
   },

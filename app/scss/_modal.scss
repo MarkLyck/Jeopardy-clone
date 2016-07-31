@@ -92,16 +92,13 @@
     .pass-btn {
       background: none;
       border: none;
+      color: #555;
       .pass-span {
         color: #df1e58;
-        &:hover {
-          cursor: pointer;
-          color: darken(#df1e58, 5%);
-          background: none;
-        }
       }
       &:hover {
         cursor: pointer;
+        background: none;
         color: darken(#df1e58, 5%)
       }
     }
