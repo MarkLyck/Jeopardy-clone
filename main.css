@@ -578,6 +578,8 @@ header nav {
     #user-section .user p {
       margin: 0;
       font-size: 1rem; }
+    #user-section .user .my-player {
+      font-weight: bold; }
     #user-section .user h3 {
       margin: 0; }
 
