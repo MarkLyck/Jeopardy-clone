@@ -70,9 +70,18 @@ const QuestionModal = React.createClass({
       }
     }, 1000);
     this.setState({interval: countdownTimer})
+    // store.multiplayerGame.model.on('updateGame', this.stopMusic)
   },
+  // stopMusic: function() {
+  //   if (!store.multiplayerGame.model.get('answering')) {
+  //     this.setState({music: false})
+  //   }
+  // },
   componentWillUnmount: function() {
     clearInterval(this.state.interval);
+    this.thinkingMusic.pause()
+    this.thinkingMusic.currentTime = 0;
+    // store.multiplayerGame.model.off('updateGame', this.stopMusic)
   },
   speakAnswer: function() {
     this.setState({music:false, listening: true})

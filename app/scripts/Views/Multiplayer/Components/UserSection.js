@@ -10,14 +10,12 @@ const UserSection = React.createClass({
     store.multiplayerGame.model.on('updateGame', this.updateMoney)
   },
   updateMoney: function() {
-    console.log('MODEL: ', store.multiplayerGame.model);
     this.setState({players: store.multiplayerGame.model.get('players')})
   },
   componentWillUnmount: function() {
     store.multiplayerGame.model.off('updateGame', this.updateMoney)
   },
   render: function() {
-    console.log('PLAYERS: ', this.state.players);
     let players = this.state.players.map((player, i) => {
       return (
         <li className="user" key={i}>

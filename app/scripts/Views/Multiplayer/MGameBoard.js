@@ -82,10 +82,7 @@ const MGameBoard = React.createClass({
       let myPlayer = playersArr[playerIndex]
 
       myPlayer.money += this.state.clueValue
-      console.log('players BEFORE: ', playersArr);
-      console.log('MYPLAYER: ', myPlayer);
       playersArr.splice(playerIndex, 1, myPlayer)
-      console.log('players AFTER: ', playersArr);
       store.multiplayerGame.model.set('players', playersArr)
 
       store.multiplayerGame.model.save()
@@ -94,7 +91,6 @@ const MGameBoard = React.createClass({
     }
   },
   componentWillUnmount: function() {
-    // store.session.off('change', this.updateUser)
     store.session.off()
     store.clues.off()
     store.multiplayerGame.model.off()

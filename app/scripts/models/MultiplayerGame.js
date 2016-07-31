@@ -14,7 +14,7 @@ const Game = Backbone.Model.extend({
     playerCount: 1,
     turn: '',
     answered: false,
-    answerering: false,
+    answering: false,
     clueId: 0,
     created: new Date()
   },
@@ -26,7 +26,7 @@ const Game = Backbone.Model.extend({
     let fetchingInterval = window.setInterval(() => {
       this.fetch({
         success: (response) => {
-          console.log('Fetching');
+          // console.log('Fetching');
           if (store.clues.get(this.get('clueId'))) {
             let updatedClues = this.get('clues').map((filterClue) => {
               if (filterClue.id === this.get('clueId')) {
