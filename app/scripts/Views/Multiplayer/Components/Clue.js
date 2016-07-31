@@ -14,7 +14,7 @@ const Clue = React.createClass({
       if (store.multiplayerGame.model.get('playerCount') !== 3) {
         throw new Error('Not enough players')
       } else {
-        throw new Error('Is is not your turn')
+        throw new Error('It is not your turn')
       }
     }
   },

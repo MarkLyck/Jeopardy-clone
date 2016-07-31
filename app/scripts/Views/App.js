@@ -75,6 +75,7 @@ const App = React.createClass({
     if (store.session.get('authtoken') || localStorage.authtoken) {
       navButtons = (
         <ul>
+          <li id="game-type">{store.session.get('gameType')}</li>
           <li onClick={this.newGame}>New Game</li>
           <li onClick={this.gotoLeaderboards}>Leaderboards</li>
           <li onClick={this.logout}>Logout</li>
@@ -83,6 +84,7 @@ const App = React.createClass({
     } else {
       navButtons = (
         <ul>
+          <li id="game-type">{store.session.get('gameType')}</li>
           <li onClick={this.newGame}>New Game</li>
           <li onClick={this.gotoLeaderboards}>Leaderboards</li>
           <li onClick={this.showLogin}>Login</li>

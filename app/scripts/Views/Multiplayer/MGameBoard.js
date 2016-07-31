@@ -19,6 +19,8 @@ const MGameBoard = React.createClass({
     return {game: {}, categories: [], answering: false, question: '', answer: '', isWaiting: true, players: []}
   },
   componentDidMount: function() {
+    store.session.set('gameType', 'Multiplayer')
+    store.session.trigger('change')
     console.log('MOUNTED MGAMEBOARD');
     store.multiplayerGame.model.on('updateGame', this.updateGameState)
     store.multiplayerGame.model.getGame()

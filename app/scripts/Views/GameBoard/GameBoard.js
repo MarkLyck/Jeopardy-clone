@@ -17,6 +17,8 @@ const GameBoard = React.createClass({
     return {categories: [], answering: false, question: '', answer: ''}
   },
   componentDidMount: function() {
+    store.session.set('gameType', 'Singleplayer')
+    store.session.trigger('change')
     store.game.model.on('change', this.updateGameState)
     store.game.model.getGame()
     store.session.on('change', this.updateUser)

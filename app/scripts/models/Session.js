@@ -9,7 +9,8 @@ const Session = Backbone.Model.extend({
   defaults: {
     username: '',
     money: 0,
-    highScore: 0
+    highScore: 0,
+    gameType: 'Singleplayer'
   },
   parse: function(response) {
     if (response) {

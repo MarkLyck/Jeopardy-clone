@@ -29,6 +29,14 @@ header {
           color: #555;
         }
       }
+      #game-type {
+        border: none;
+        &:hover {
+          background: none;
+          color: #fff;
+          cursor: auto;
+        }
+      }
     }
   }
 }
