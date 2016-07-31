@@ -470,6 +470,12 @@ header nav {
         cursor: pointer;
         background: #fff;
         color: #555; }
+    header nav ul #game-type {
+      border: none; }
+      header nav ul #game-type:hover {
+        background: none;
+        color: #fff;
+        cursor: auto; }
 
 .modal-container {
   position: fixed;
