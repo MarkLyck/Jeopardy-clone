@@ -15,8 +15,7 @@ const Game = Backbone.Model.extend({
     turn: '',
     answered: false,
     answering: false,
-    clueId: 0,
-    created: new Date()
+    clueId: 0
   },
   idAttribute: '_id',
   nextTurn: function() {
@@ -34,24 +33,27 @@ const Game = Backbone.Model.extend({
     let fetchingInterval = window.setInterval(() => {
       this.fetch({
         success: (response) => {
-          // console.log('Fetching');
-          if (store.clues.get(this.get('clueId'))) {
-            let updatedClues = this.get('clues').map((filterClue) => {
-              if (filterClue.id === this.get('clueId')) {
-                store.clues.remove(this.get('clueId'))
-                store.clues.add(filterClue)
-                store.clues.trigger('gotAllClues')
-                filterClue.answered = true
-                return filterClue
-              } else {
-                return filterClue
-              }
-            })
-            this.set('clues', updatedClues)
-            let chosenClue = store.clues.get(this.get('clueId'))
-            chosenClue.set('answered', true)
+          if (sessionStorage.lastUpdate !== JSON.stringify(this.toJSON())) {
+            if (store.clues.get(this.get('clueId'))) {
+              let updatedClues = this.get('clues').map((filterClue) => {
+                if (filterClue.id === this.get('clueId')) {
+                  store.clues.remove(this.get('clueId'))
+                  store.clues.add(filterClue)
+                  store.clues.trigger('gotAllClues')
+                  filterClue.answered = true
+                  return filterClue
+                } else {
+                  return filterClue
+                }
+              })
+              this.set('clues', updatedClues)
+              let chosenClue = store.clues.get(this.get('clueId'))
+              chosenClue.set('answered', true)
+            }
+            console.log('UPDATING GAME');
+            this.trigger('updateGame')
+            sessionStorage.lastUpdate = JSON.stringify(this.toJSON())
           }
-          this.trigger('updateGame')
         }
       })
     }, 2000);
