@@ -28,14 +28,11 @@ const Game = Backbone.Model.extend({
         success: (response) => {
           console.log('Fetching');
           if (store.clues.get(this.get('clueId'))) {
-            console.log('STORE HAS THIS CLUE IN IT!');
-
             let updatedClues = this.get('clues').map((filterClue) => {
               if (filterClue.id === this.get('clueId')) {
                 store.clues.remove(this.get('clueId'))
                 store.clues.add(filterClue)
                 store.clues.trigger('gotAllClues')
-                console.log('STORE CLUES AFTER UPDATE: ', store.clues, this.get('clueId'));
                 filterClue.answered = true
                 return filterClue
               } else {
@@ -57,6 +54,7 @@ const Game = Backbone.Model.extend({
       if (response.length === 0) {
         this.set('players', [{username: store.session.get('username'), money: 0}])
         this.set('turn', store.session.get('username'))
+        this.trigger('updateGame')
         for(let i = 1; i <= 6; i++) {
           this.getCategory(Math.floor(Math.random()*18000))
         }

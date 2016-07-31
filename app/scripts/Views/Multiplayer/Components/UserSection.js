@@ -4,29 +4,28 @@ import store from '../../../store'
 
 const UserSection = React.createClass({
   getInitialState: function() {
-    return {money: 0}
+    return {players: []}
   },
   componentDidMount: function() {
-    store.session.on('change', this.updateMoney)
+    store.multiplayerGame.model.on('updateGame', this.updateMoney)
   },
   updateMoney: function() {
-    this.setState({money: store.session.get('money')})
+    console.log('MODEL: ', store.multiplayerGame.model);
+    this.setState({players: store.multiplayerGame.model.get('players')})
   },
   componentWillUnmount: function() {
-    store.session.off('change', this.updateMoney)
+    store.multiplayerGame.model.off('updateGame', this.updateMoney)
   },
   render: function() {
-    let players;
-    if (this.props.players[0]) {
-      players = this.props.players.map((player, i) => {
-        return (
-          <li className="user" key={i}>
-            <p>{player.username}</p>
-            <h3>${player.money}</h3>
-          </li>
-        )
-      })
-    }
+    console.log('PLAYERS: ', this.state.players);
+    let players = this.state.players.map((player, i) => {
+      return (
+        <li className="user" key={i}>
+          <p>{player.username}</p>
+          <h3>${player.money}</h3>
+        </li>
+      )
+    })
     return (
       <ul id="user-section">
         {players}

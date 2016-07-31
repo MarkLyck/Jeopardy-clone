@@ -74,19 +74,29 @@ const MGameBoard = React.createClass({
       store.session.set('money', newMoney)
       this.setState({answering: 'correct'})
 
-      // let answeredClue = store.multiplayerGame.model
-      console.log('model clues: ', store.multiplayerGame.model.get('clues'));
-      // console.log('store clues: ', store.clues);
-
       store.multiplayerGame.model.set('answered', true)
       store.multiplayerGame.model.set('answering', false)
+
+      let playersArr = store.multiplayerGame.model.get('players')
+      let playerIndex = _.findIndex(playersArr, function(playerItem) { return playerItem.username == store.session.get('username') })
+      let myPlayer = playersArr[playerIndex]
+
+      myPlayer.money += this.state.clueValue
+      console.log('players BEFORE: ', playersArr);
+      console.log('MYPLAYER: ', myPlayer);
+      playersArr.splice(playerIndex, 1, myPlayer)
+      console.log('players AFTER: ', playersArr);
+      store.multiplayerGame.model.set('players', playersArr)
+
       store.multiplayerGame.model.save()
     } else {
       this.setState({answering: 'wrong', userAnswer: answer})
     }
   },
   componentWillUnmount: function() {
-    store.session.off('change', this.updateUser)
+    // store.session.off('change', this.updateUser)
+    store.session.off()
+    store.clues.off()
     store.multiplayerGame.model.off()
   },
   render: function() {
