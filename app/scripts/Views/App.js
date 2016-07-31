@@ -39,18 +39,11 @@ const App = React.createClass({
     this.setState({showModal: false})
   },
   newGame: function() {
-    // console.log(this.props.location.pathname);
-    // if (this.props.location.pathname === '/leaderboards') {
-    //   hashHistory.push('/play')
-    // } else {
-    //   store.game.model.clear()
-    //   store.game.model.getGame()
-    // }
     this.setState({showModal: 'gameType'})
   },
   startSinglePlayer: function() {
     this.setState({showModal: false})
-    if (this.props.location.pathname === '/leaderboards') {
+    if (this.props.location.pathname !== '/play') {
       hashHistory.push('/play')
     } else {
       store.game.model.clear()
@@ -59,7 +52,12 @@ const App = React.createClass({
   },
   startMultiPlayer: function() {
     this.setState({showModal: false})
-    hashHistory.push('/multiplayer')
+    if (this.props.location.pathname !== '/multiplayer') {
+      hashHistory.push('/multiplayer')
+    } else {
+      store.multiplayerGame.model.clear()
+      store.multiplayerGame.model.getGame()
+    }
   },
   componentDidMount: function() {
     store.session.on('change', this.stopModal)

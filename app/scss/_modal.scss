@@ -18,6 +18,26 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    input {
+      width: 80%;
+      padding: 20px;
+      box-sizing: border-box;
+      margin: 10px;
+      // border-radius: 3px;
+    }
+    button {
+      width: 80%;
+      padding: 20px;
+      background-color: $primary-color;
+      border: none;
+      color: #fff;
+      box-sizing: border-box;
+      margin: 10px;
+      &:hover {
+        background-color: darken($primary-color, 5%);
+        cursor: pointer;
+      }
+    }
     #time-left {
       position: absolute;
       left: 50%;
