@@ -96,7 +96,8 @@
         color: #df1e58;
         &:hover {
           cursor: pointer;
-          color: darken(#df1e58, 5%)
+          color: darken(#df1e58, 5%);
+          background: none;
         }
       }
       &:hover {

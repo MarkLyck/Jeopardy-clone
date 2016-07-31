@@ -11,7 +11,6 @@ import QuestionModal from './components/QuestionModal'
 import Modal from '../gComponents/Modal'
 import UserSection from './components/UserSection'
 
-
 // MULTIPLAYER GAMEBOARD
 
 const MGameBoard = React.createClass({
@@ -88,11 +87,15 @@ const MGameBoard = React.createClass({
       store.multiplayerGame.model.set('players', playersArr)
       store.multiplayerGame.model.nextTurn()
     } else {
+      // store.multiplayerGame.model.set('answering', false)
+      // store.multiplayerGame.save()
       this.setState({answering: 'wrong', userAnswer: answer})
     }
+    // store.multiplayerGame.model.set('answered', true)
+
   },
   componentWillUnmount: function() {
-    store.session.off()
+    store.session.off('change', this.updateUser)
     store.clues.off()
     store.multiplayerGame.model.off()
   },

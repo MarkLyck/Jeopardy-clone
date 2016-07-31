@@ -42,7 +42,6 @@ const QuestionModal = React.createClass({
   },
   componentDidMount: function() {
     let countdownTimer = setInterval(() => {
-      console.log('TIME LOOP');
       if (this.state.timeLeft !== 0) {
         this.setState({timeLeft: this.state.timeLeft -1})
       } else {
@@ -54,7 +53,6 @@ const QuestionModal = React.createClass({
     this.setState({interval: countdownTimer})
   },
   componentWillUnmount: function() {
-    console.log('QUESTION MODAL UNMOUNTING');
     clearInterval(this.state.countdownTimer);
   },
   speakAnswer: function() {
